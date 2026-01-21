@@ -12,24 +12,29 @@ export default function About() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
         
         {/* Left Column: Avatar & Intro */}
-        <div className="md:col-span-4 space-y-8">
+        <div className="md:col-span-4 space-y-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative aspect-[3/4] w-full overflow-hidden bg-white/5"
+            className="relative w-48 md:w-64 aspect-[3/4] overflow-hidden bg-white/5 rounded-2xl border border-white/10"
           >
             {/* Removed grayscale class */}
-            <img src={avatarImg} alt="Markie" className="w-full h-full object-cover transition-all duration-700" />
-            <div className="absolute top-4 right-4 flex gap-2">
-               <span className="px-3 py-1 bg-black/50 backdrop-blur-md text-white text-xs border border-white/10 uppercase tracking-wider">ENTJ</span>
-               <span className="px-3 py-1 bg-black/50 backdrop-blur-md text-white text-xs border border-white/10 uppercase tracking-wider flex items-center gap-1"><MapPin className="w-3 h-3"/> Beijing</span>
-            </div>
+            <img src={avatarImg} alt="Markie" className="w-full h-full object-cover transition-all duration-700 hover:scale-105" />
           </motion.div>
           
           <div className="space-y-4">
-             <h3 className="text-2xl font-display font-bold text-white">黄子榕 / Mark</h3>
-             <p className="text-white/60 font-light leading-relaxed">
+             <div>
+               <h3 className="text-3xl font-display font-bold text-white mb-3">黄子榕 / Mark</h3>
+               <div className="flex gap-2">
+                  <span className="px-2.5 py-0.5 bg-white/10 text-white/80 text-[10px] font-bold border border-white/10 uppercase tracking-widest rounded-md">ENTJ</span>
+                  <span className="px-2.5 py-0.5 bg-white/10 text-white/80 text-[10px] font-bold border border-white/10 uppercase tracking-widest rounded-md flex items-center gap-1">
+                    <MapPin className="w-3 h-3"/> Beijing
+                  </span>
+               </div>
+             </div>
+             
+             <p className="text-white/60 font-light leading-relaxed text-sm">
                20岁，AI 产品实习生。<br/>
                生活日常：钢琴 ｜ 骑行 ｜ 自媒体。<br/>
                致力于探索 AIGC 工作流与多模态交互。

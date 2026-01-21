@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Download, Play, ExternalLink } from "lucide-react";
-import work1Img from "@/assets/work-1.jpg";
-import work2Img from "@/assets/gallery-2.jpg";
-import work3Img from "@/assets/gallery-3.jpg";
+import work1Img from "@/assets/work-gaybar.jpg";
+import work2Img from "@/assets/work-singer.jpg";
+import work3Img from "@/assets/work-canteen.jpg";
 
 const history = [
   {
@@ -27,24 +27,24 @@ const history = [
 
 const works = [
   {
-    title: "看见白袜就想闻怎么办？",
+    title: "直男 GAY 吧初体验",
     platform: "Bilibili",
     url: "https://www.bilibili.com/video/BV1vT5XzbE85",
     image: work1Img,
     views: "1.2w"
   },
   {
-    title: "AI 视频创作",
+    title: "冷门歌手？AI 修复",
     platform: "Douyin",
     url: "https://www.douyin.com/video/7517631316435946764",
-    image: work2Img, // 暂用 gallery-2
+    image: work2Img,
     views: "热门"
   },
   {
-    title: "创意短片",
+    title: "学校食堂？预制菜？",
     platform: "Douyin",
     url: "https://www.douyin.com/video/7491249976077585690",
-    image: work3Img, // 暂用 gallery-3
+    image: work3Img,
     views: "精选"
   }
 ];
@@ -83,44 +83,38 @@ export default function ExperienceAndWorks() {
         {/* Right: Selected Works */}
         <div>
            <div className="flex items-center justify-between mb-12">
-             <h2 className="text-3xl font-display font-bold text-white">精选作品</h2>
+             <h2 className="text-3xl font-display font-bold text-white">视频作品</h2>
            </div>
            
-           <div className="grid grid-cols-3 gap-4">
+           <div className="grid grid-cols-1 gap-6">
              {works.map((work, i) => (
                <a 
                  key={i} 
                  href={work.url} 
                  target="_blank" 
                  rel="noopener noreferrer"
-                 className="group relative aspect-[9/16] bg-white/5 overflow-hidden border border-white/10 cursor-pointer"
+                 className="group relative aspect-video bg-white/5 overflow-hidden border border-white/10 cursor-pointer rounded-lg"
                >
                  {/* Image */}
                  <img 
                    src={work.image} 
                    alt={work.title} 
-                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                  />
                  
                  {/* Overlay */}
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                 
-                 {/* Play Icon */}
-                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                   <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30">
-                     <Play className="w-4 h-4 fill-current" />
-                   </div>
-                 </div>
-
-                 {/* Content */}
-                 <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                   <div className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1 flex items-center justify-between">
-                     <span>{work.platform}</span>
-                     <span>{work.views}</span>
-                   </div>
-                   <h3 className="text-sm font-bold text-white leading-tight line-clamp-2 group-hover:text-emerald-400 transition-colors">
-                     {work.title}
-                   </h3>
+                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center p-4">
+                      <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mx-auto mb-3 transform scale-0 group-hover:scale-100 transition-transform duration-300 delay-100">
+                        <Play className="w-5 h-5 fill-current ml-0.5" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-150">
+                        {work.title}
+                      </h3>
+                      <p className="text-white/60 text-xs uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-200">
+                        {work.platform}
+                      </p>
+                    </div>
                  </div>
                </a>
              ))}

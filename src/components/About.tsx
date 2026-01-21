@@ -41,6 +41,18 @@ export default function About() {
                致力于探索 AIGC 工作流与多模态交互。
              </p>
           </div>
+
+          {/* Wish List - Moved to Left Column */}
+          <div className="glass-panel p-6 border-l-2 border-l-purple-500 relative overflow-hidden mt-8">
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-2 text-purple-400">
+                <Heart className="w-4 h-4 fill-current animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-widest">心愿单</span>
+              </div>
+              <h4 className="text-xl font-bold text-white mb-1">寻找 AI 产品 Offer / 创业伙伴</h4>
+              <p className="text-white/50 text-xs">Open to new opportunities in Beijing / Remote.</p>
+            </div>
+          </div>
         </div>
 
         {/* Right Column: Details Grid */}
@@ -109,30 +121,16 @@ export default function About() {
           </div>
 
           {/* Interests & Skills (3D Tag Cloud) */}
-          <div className="relative">
+          <div className="relative h-full flex flex-col">
              <div className="flex items-center justify-between mb-4">
                <span className="text-xs font-bold text-white/40 uppercase tracking-widest">标签云</span>
                <div className="text-[10px] text-white/20 uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">3D View</div>
              </div>
-             <div className="w-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner">
+             <div className="w-full flex-1 min-h-[400px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner relative group">
+               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                <TagCloud />
              </div>
           </div>
-
-          {/* Wish List */}
-          <div className="glass-panel p-8 border-l-2 border-l-purple-500 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2 text-purple-400">
-                  <Heart className="w-4 h-4 fill-current" />
-                  <span className="text-xs font-bold uppercase tracking-widest">心愿单</span>
-                </div>
-                <h4 className="text-2xl font-bold text-white mb-1">寻找 AI 产品 Offer / 创业伙伴</h4>
-                <p className="text-white/50 text-sm">Open to new opportunities in Beijing / Remote.</p>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>

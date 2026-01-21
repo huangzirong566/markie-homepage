@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import avatarImg from "@/assets/avatar.jpg";
-import { ArrowUpRight, MapPin, Heart, Star } from "lucide-react";
+import { ArrowUpRight, MapPin, Heart } from "lucide-react";
+import iconBilibili from "@/assets/icon-bilibili.svg";
+import iconDouyin from "@/assets/icon-douyin.svg";
+import iconXiaohongshu from "@/assets/icon-xiaohongshu.svg";
+import iconOfficialAccount from "@/assets/icon-official-account.svg";
 
 export default function About() {
   return (
@@ -43,8 +47,8 @@ export default function About() {
               {/* Bilibili */}
               <a href="https://space.bilibili.com/" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-400/20 flex items-center justify-center text-blue-400">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.758v6.844c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.35.004 16.829v-6.844c.032-1.51.552-2.769 1.556-3.773S3.822 4.688 5.332 4.653h.854l-3.04-3.04.707-.707 3.747 3.747h8.803l3.748-3.747.707.707-3.04 3.04zm-1.42 12.853a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-8.853 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+                  <div className="w-10 h-10 rounded-full bg-blue-400/20 flex items-center justify-center overflow-hidden">
+                    <img src={iconBilibili} alt="Bilibili" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <div className="text-white font-bold text-lg mb-1">Bilibili</div>
@@ -57,8 +61,8 @@ export default function About() {
               {/* Douyin */}
               <a href="https://www.douyin.com/user/self?from_tab_name=main&showTab=post" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-black/20 border border-white/10 flex items-center justify-center text-white">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.03 9.03 0 0 1 17.63.75V0h-4.07v14.77a3.3 3.3 0 1 1-3.3-3.3 3.3 3.3 0 0 1 1.6.43V8.05A7.37 7.37 0 1 0 17.63 15V7.8a13 13 0 0 0 5.5 2.25V5.92a9.07 9.07 0 0 1-4.08-1.01z"/></svg>
+                  <div className="w-10 h-10 rounded-full bg-black/20 border border-white/10 flex items-center justify-center overflow-hidden">
+                    <img src={iconDouyin} alt="Douyin" className="w-full h-full object-cover scale-110" />
                   </div>
                   <div>
                     <div className="text-white font-bold text-lg mb-1">抖音</div>
@@ -71,8 +75,8 @@ export default function About() {
               {/* RedNote */}
               <a href="https://www.xiaohongshu.com/user/profile/60f8378f0000000001002283?xsec_token=ABoMDNNd73C5XsVG3WbvfLCHLBbly-Fxr_1Lt_4-YhFhc%3D&xsec_source=pc_search" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-500">
-                    <span className="font-bold text-lg">红</span>
+                  <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center overflow-hidden">
+                    <img src={iconXiaohongshu} alt="Xiaohongshu" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <div className="text-white font-bold text-lg mb-1">小红书</div>
@@ -85,8 +89,8 @@ export default function About() {
               {/* WeChat */}
               <a href="https://mp.weixin.qq.com/s/R9d46WKHucFc3k5Ke6zpyg?clicktime=1769016370&enterid=1769016370&scene=126&sessionid=1769016362&subscene=227" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8.766 12.338c.366 0 .687-.29.687-.677 0-.387-.321-.677-.687-.677-.367 0-.687.29-.687.677 0 .387.32.677.687.677zm6.468 0c.367 0 .688-.29.688-.677 0-.387-.321-.677-.688-.677-.366 0-.687.29-.687.677 0 .387.321.677.687.677zm-3.234 5.25c-3.784 0-6.977-2.613-6.977-5.903 0-3.387 3.193-6 6.977-6 3.784 0 6.977 2.613 6.977 6 0 3.29-3.193 5.903-6.977 5.903z"/></svg>
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center overflow-hidden">
+                    <img src={iconOfficialAccount} alt="WeChat" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <div className="text-white font-bold text-lg mb-1">公众号</div>

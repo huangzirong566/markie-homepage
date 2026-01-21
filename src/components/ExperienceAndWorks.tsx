@@ -3,6 +3,8 @@ import { Download, Play, ExternalLink } from "lucide-react";
 import work1Img from "@/assets/work-gaybar.png";
 import work2Img from "@/assets/work-singer.webp";
 import work3Img from "@/assets/work-canteen.jpg";
+import iconBilibili from "@/assets/icon-bilibili.svg";
+import iconDouyin from "@/assets/icon-douyin.svg";
 
 const history = [
   {
@@ -24,9 +26,6 @@ const history = [
     desc: "开发视频转总结工具，解决信息过载问题。"
   }
 ];
-
-import iconBilibili from "@/assets/icon-bilibili.svg";
-import iconDouyin from "@/assets/icon-douyin.svg";
 
 const works = [
   {
@@ -121,8 +120,10 @@ export default function ExperienceAndWorks() {
                    {/* Info */}
                    <div className="flex-1 min-w-0">
                      <div className="flex items-center gap-2 mb-1">
-                       <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center p-0.5">
-                         <img src={work.icon} alt={work.platform} className="w-full h-full object-contain" />
+                       <div className={`w-auto h-4 px-1.5 py-0.5 rounded-full flex items-center justify-center ${
+                         work.platform === 'Bilibili' ? 'bg-blue-500/20' : 'bg-black/20 border border-white/10'
+                       }`}>
+                         <img src={work.icon} alt={work.platform} className="h-full w-auto object-contain" />
                        </div>
                        <span className="text-[10px] text-white/40 uppercase tracking-wider">{work.views}</span>
                      </div>

@@ -36,6 +36,55 @@ export default function Hero() {
         </motion.div>
       </div>
 
+      {/* Navigation Guide - Right Side */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-3"
+      >
+        {/* Up Arrow - Works */}
+        <a 
+          href="#works" 
+          className="group flex flex-col items-center gap-2 cursor-pointer"
+        >
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-white/40 group-hover:text-white transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 15l7-7 7 7" />
+            </svg>
+          </motion.div>
+          <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors writing-vertical">
+            我的作品
+          </span>
+        </a>
+
+        {/* Decorative Line */}
+        <div className="w-px h-16 bg-gradient-to-b from-white/20 via-white/40 to-white/20" />
+
+        {/* Down Arrow - About */}
+        <a 
+          href="#about" 
+          className="group flex flex-col items-center gap-2 cursor-pointer"
+        >
+          <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors writing-vertical">
+            我是谁
+          </span>
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-white/40 group-hover:text-white transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
+        </a>
+      </motion.div>
+
       {/* Fixed Contact Widget - Bottom Right */}
       <motion.div 
         initial={{ opacity: 0, y: 50 }}

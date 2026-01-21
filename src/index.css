@@ -38,6 +38,11 @@
   @apply bg-white/5 backdrop-blur-xl border border-white/10;
 }
 
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
 ::-webkit-scrollbar {
   width: 0px;
 }

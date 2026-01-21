@@ -5,7 +5,7 @@ export default function ScrollGuide() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
       setIsVisible(true);
@@ -30,7 +30,7 @@ export default function ScrollGuide() {
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 50, transition: { duration: 0.5 } }}
+          exit={{ opacity: 0, x: 50 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="fixed right-6 md:right-12 top-24 z-40 flex flex-col items-center gap-4 pointer-events-none select-none"
         >

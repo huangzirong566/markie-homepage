@@ -41,45 +41,50 @@ export default function Hero() {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-3"
+        className="absolute right-8 md:right-16 top-1/3 z-20 hidden md:flex flex-col items-center gap-6"
       >
         {/* Up Arrow - Works */}
         <a 
           href="#works" 
-          className="group flex flex-col items-center gap-2 cursor-pointer"
+          className="group flex flex-col items-center gap-3 cursor-pointer px-4 py-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/30 transition-all"
         >
           <motion.div
-            animate={{ y: [0, -5, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="text-white/40 group-hover:text-white transition-colors"
+            className="text-white/70 group-hover:text-white transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 15l7-7 7 7" />
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
             </svg>
           </motion.div>
-          <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors writing-vertical">
+          <span className="text-sm font-medium tracking-wide text-white/70 group-hover:text-white transition-colors writing-vertical">
             我的作品
           </span>
         </a>
 
-        {/* Decorative Line */}
-        <div className="w-px h-16 bg-gradient-to-b from-white/20 via-white/40 to-white/20" />
+        {/* Decorative Element */}
+        <div className="flex flex-col items-center gap-1">
+          <div className="w-1.5 h-1.5 rounded-full bg-white/30" />
+          <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+          <div className="w-px h-8 bg-gradient-to-b from-transparent to-white/30" />
+          <div className="w-1.5 h-1.5 rounded-full bg-white/30" />
+        </div>
 
         {/* Down Arrow - About */}
         <a 
           href="#about" 
-          className="group flex flex-col items-center gap-2 cursor-pointer"
+          className="group flex flex-col items-center gap-3 cursor-pointer px-4 py-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/30 transition-all"
         >
-          <span className="text-[10px] uppercase tracking-widest text-white/40 group-hover:text-white transition-colors writing-vertical">
+          <span className="text-sm font-medium tracking-wide text-white/70 group-hover:text-white transition-colors writing-vertical">
             我是谁
           </span>
           <motion.div
-            animate={{ y: [0, 5, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="text-white/40 group-hover:text-white transition-colors"
+            className="text-white/70 group-hover:text-white transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </motion.div>
         </a>

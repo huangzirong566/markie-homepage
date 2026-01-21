@@ -5,6 +5,7 @@ import iconBilibili from "@/assets/icon-bilibili.svg";
 import iconDouyin from "@/assets/icon-douyin.svg";
 import iconXiaohongshu from "@/assets/icon-xiaohongshu.svg";
 import iconOfficialAccount from "@/assets/icon-official-account.svg";
+import TagCloud from "@/components/TagCloud";
 
 export default function About() {
   return (
@@ -107,36 +108,15 @@ export default function About() {
             </div>
           </div>
 
-          {/* Interests & Stack */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">兴趣爱好</span>
-               <ul className="space-y-4">
-                 <li className="flex items-center gap-3 text-white/80">
-                   <div className="w-1.5 h-1.5 bg-white/20 rounded-full" /> 
-                   <span>孙燕姿 / 周杰伦</span>
-                 </li>
-                 <li className="flex items-center gap-3 text-white/80">
-                   <div className="w-1.5 h-1.5 bg-white/20 rounded-full" /> 
-                   <span>皇室战争 / 老友记</span>
-                 </li>
-                 <li className="flex items-center gap-3 text-white/80">
-                   <div className="w-1.5 h-1.5 bg-white/20 rounded-full" /> 
-                   <span>佳能 R62 摄影</span>
-                 </li>
-               </ul>
-            </div>
-            
-            <div>
-               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">最近在玩</span>
-               <div className="flex flex-wrap gap-2">
-                 {['Coze', 'Vibe Coding', 'Multi-modal', 'Vision Pro', 'SD'].map(tech => (
-                   <span key={tech} className="px-3 py-1.5 border border-white/10 text-white/60 text-sm hover:text-white hover:border-white/40 transition-colors cursor-default">
-                     {tech}
-                   </span>
-                 ))}
-               </div>
-            </div>
+          {/* Interests & Skills (3D Tag Cloud) */}
+          <div className="relative">
+             <div className="flex items-center justify-between mb-4">
+               <span className="text-xs font-bold text-white/40 uppercase tracking-widest">标签云</span>
+               <div className="text-[10px] text-white/20 uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">3D View</div>
+             </div>
+             <div className="w-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner">
+               <TagCloud />
+             </div>
           </div>
 
           {/* Wish List */}

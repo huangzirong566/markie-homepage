@@ -36,31 +36,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Fixed Contact Widget - Bottom Right */}
-      <motion.div 
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-12 right-6 md:right-12 z-20"
-      >
-        <div className="glass-panel p-6 rounded-none backdrop-blur-2xl border-l-2 border-white/20 min-w-[280px]">
-           <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Contact</h3>
-           <div className="space-y-4">
-             <div onClick={() => copy("hzr18679640565", "WeChat")} className="flex items-center justify-between group cursor-pointer">
-               <span className="text-white/80 group-hover:text-white transition-colors text-sm">WeChat</span>
-               <span className="text-white/40 text-xs group-hover:text-white transition-colors font-mono">hzr18679640565</span>
-             </div>
-             <div onClick={() => copy("18679640565", "Phone")} className="flex items-center justify-between group cursor-pointer">
-               <span className="text-white/80 group-hover:text-white transition-colors text-sm">Phone</span>
-               <span className="text-white/40 text-xs group-hover:text-white transition-colors font-mono">18679640565</span>
-             </div>
-             <div onClick={() => copy("3083985811@qq.com", "Email")} className="flex items-center justify-between group cursor-pointer">
-               <span className="text-white/80 group-hover:text-white transition-colors text-sm">Email</span>
-               <span className="text-white/40 text-xs group-hover:text-white transition-colors font-mono">3083985811@qq.com</span>
-             </div>
-           </div>
-        </div>
-      </motion.div>
+      {/* Fixed Contact Widget - Removed as per request */}
     </section>
   );
 }

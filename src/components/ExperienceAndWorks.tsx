@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Download, Play, ExternalLink } from "lucide-react";
-import work1Img from "@/assets/work-gaybar.jpg";
-import work2Img from "@/assets/work-singer.jpg";
+import work1Img from "@/assets/work-gaybar.png";
+import work2Img from "@/assets/work-singer.webp";
 import work3Img from "@/assets/work-canteen.jpg";
 
 const history = [

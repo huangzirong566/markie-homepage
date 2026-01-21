@@ -30,11 +30,21 @@ export default function Navbar() {
 
          <div className="h-6 w-px bg-white/10 hidden md:block" />
 
-         <a href="#/contact" className="hidden md:flex items-center gap-2 text-white/40 hover:text-white transition-colors group">
-           <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
-             <Phone className="w-3.5 h-3.5" />
+         <a href="#/contact" className="hidden md:flex items-center gap-3 text-white/60 hover:text-white transition-colors group">
+           <div className="flex items-center gap-2">
+             <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
+               <Phone className="w-3.5 h-3.5" />
+             </div>
+             <span className="text-sm font-mono tracking-wider font-medium">18679640565</span>
            </div>
-           <span className="text-xs font-mono tracking-wider">18679640565</span>
+           
+           <span className="text-white/20">/</span>
+           
+           <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
+             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+               <path d="M8.766 12.338c.366 0 .687-.29.687-.677 0-.387-.321-.677-.687-.677-.367 0-.687.29-.687.677 0 .387.32.677.687.677zm6.468 0c.367 0 .688-.29.688-.677 0-.387-.321-.677-.688-.677-.366 0-.687.29-.687.677 0 .387.321.677.687.677zm-3.234 5.25c-3.784 0-6.977-2.613-6.977-5.903 0-3.387 3.193-6 6.977-6 3.784 0 6.977 2.613 6.977 6 0 3.29-3.193 5.903-6.977 5.903z"/>
+             </svg>
+           </div>
          </a>
        </div>
        

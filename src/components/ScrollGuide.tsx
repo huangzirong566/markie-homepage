@@ -5,7 +5,7 @@ export default function ScrollGuide() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId: any;
 
     const handleScroll = () => {
       setIsVisible(true);
@@ -28,6 +28,7 @@ export default function ScrollGuide() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          key="scroll-guide"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}

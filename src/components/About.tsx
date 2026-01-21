@@ -47,13 +47,27 @@ export default function About() {
                 </div>
                 <ArrowUpRight className="text-white/40 group-hover:text-white transition-colors" />
               </a>
-              <div className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
+              
+              <a href="https://www.xiaohongshu.com/user/profile/60f8378f0000000001002283?xsec_token=ABoMDNNd73C5XsVG3WbvfLCHLBbly-Fxr_1Lt_4-YhFhc%3D&xsec_source=pc_search" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
                 <div>
                   <div className="text-white font-bold text-lg mb-1">AI搭子小龙</div>
                   <div className="text-white/40 text-sm">小红书 AI创作者</div>
                 </div>
                 <ArrowUpRight className="text-white/40 group-hover:text-white transition-colors" />
-              </div>
+              </a>
+
+              <a href="https://mp.weixin.qq.com/s/R9d46WKHucFc3k5Ke6zpyg?clicktime=1769016370&enterid=1769016370&scene=126&sessionid=1769016362&subscene=227" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer md:col-span-2">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8.766 12.338c.366 0 .687-.29.687-.677 0-.387-.321-.677-.687-.677-.367 0-.687.29-.687.677 0 .387.32.677.687.677zm6.468 0c.367 0 .688-.29.688-.677 0-.387-.321-.677-.688-.677-.366 0-.687.29-.687.677 0 .387.321.677.687.677zm-3.234 5.25c-3.784 0-6.977-2.613-6.977-5.903 0-3.387 3.193-6 6.977-6 3.784 0 6.977 2.613 6.977 6 0 3.29-3.193 5.903-6.977 5.903z"/></svg>
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-lg mb-1">AI产品经理日常</div>
+                    <div className="text-white/40 text-sm">微信公众号</div>
+                  </div>
+                </div>
+                <ArrowUpRight className="text-white/40 group-hover:text-white transition-colors" />
+              </a>
             </div>
           </div>
 

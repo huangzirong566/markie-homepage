@@ -22,16 +22,16 @@ export default function Hero() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="md:pl-12"
+          className="md:pl-24"
         >
-          <h2 className="text-base md:text-lg font-sans tracking-[0.4em] text-white/70 mb-8 uppercase border-l-4 border-white pl-6">
+          <h2 className="text-lg md:text-xl font-sans tracking-[0.5em] text-white/70 mb-10 uppercase border-l-4 border-white pl-8">
             Product Manager & Creator
           </h2>
-          <h1 className="text-7xl md:text-9xl font-bold leading-[1.1] text-white mb-10 font-display tracking-tight">
+          <h1 className="text-8xl md:text-[11rem] font-bold leading-[1] text-white mb-12 font-display tracking-tighter">
             黄子榕 <br/>
             <span className="italic font-light opacity-80">- Mark</span>
           </h1>
-          <p className="text-2xl md:text-4xl text-white/90 font-light italic font-display tracking-wide">
+          <p className="text-3xl md:text-5xl text-white/90 font-light italic font-display tracking-wide">
             "独立思考，无限进步"
           </p>
         </motion.div>

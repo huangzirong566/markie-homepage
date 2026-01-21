@@ -121,12 +121,12 @@ export default function About() {
           </div>
 
           {/* Interests & Skills (3D Tag Cloud) */}
-          <div className="relative h-full flex flex-col">
+          <div className="relative h-full flex flex-col mb-8 md:mb-0">
              <div className="flex items-center justify-between mb-4">
                <span className="text-xs font-bold text-white/40 uppercase tracking-widest">标签云</span>
                <div className="text-[10px] text-white/20 uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">3D View</div>
              </div>
-             <div className="w-full flex-1 min-h-[400px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner relative group">
+             <div className="w-full flex-1 min-h-[320px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner relative group">
                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                <TagCloud />
              </div>

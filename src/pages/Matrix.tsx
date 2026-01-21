@@ -55,7 +55,7 @@ const matrixItems: MatrixItem[] = [
     title: "联系我",
     description: "商务合作与交流",
     icon: <MessageCircle className="w-8 h-8" />,
-    url: "#contact",
+    url: "#/contact",
     color: "from-indigo-500 to-violet-500",
     status: "live",
   },

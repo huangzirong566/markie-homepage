@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Download, ArrowRight } from "lucide-react";
-import { Link } from "wouter";
+import { Download, Play, ExternalLink } from "lucide-react";
+import work1Img from "@/assets/work-1.jpg";
+import work2Img from "@/assets/gallery-2.jpg";
+import work3Img from "@/assets/gallery-3.jpg";
 
 const history = [
   {
@@ -23,10 +25,34 @@ const history = [
   }
 ];
 
+const works = [
+  {
+    title: "看见白袜就想闻怎么办？",
+    platform: "Bilibili",
+    url: "https://www.bilibili.com/video/BV1vT5XzbE85",
+    image: work1Img,
+    views: "1.2w"
+  },
+  {
+    title: "AI 视频创作",
+    platform: "Douyin",
+    url: "https://www.douyin.com/video/7517631316435946764",
+    image: work2Img, // 暂用 gallery-2
+    views: "热门"
+  },
+  {
+    title: "创意短片",
+    platform: "Douyin",
+    url: "https://www.douyin.com/video/7491249976077585690",
+    image: work3Img, // 暂用 gallery-3
+    views: "精选"
+  }
+];
+
 export default function ExperienceAndWorks() {
   return (
     <section id="works" className="py-24 px-6 md:px-24 w-full max-w-[1400px] mx-auto border-t border-white/5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-24">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
         
         {/* Left: Experience List */}
         <div>
@@ -54,24 +80,50 @@ export default function ExperienceAndWorks() {
            </div>
         </div>
 
-        {/* Right: Selected Works (Empty State as requested) */}
+        {/* Right: Selected Works */}
         <div>
            <div className="flex items-center justify-between mb-12">
              <h2 className="text-3xl font-display font-bold text-white">精选作品</h2>
            </div>
            
-           <div className="h-[500px] border border-white/10 bg-white/5 flex flex-col items-center justify-center text-center p-8 group hover:bg-white/10 transition-colors cursor-pointer">
-              <Link href="/portfolio">
-                <div className="w-full h-full flex flex-col items-center justify-center">
-                  <h3 className="text-2xl font-bold text-white mb-4">View Full Portfolio</h3>
-                  <p className="text-white/50 max-w-sm mb-8">
-                    Explore a collection of photography, design, and AI-generated works.
-                  </p>
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                </div>
-              </Link>
+           <div className="grid grid-cols-3 gap-4">
+             {works.map((work, i) => (
+               <a 
+                 key={i} 
+                 href={work.url} 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="group relative aspect-[9/16] bg-white/5 overflow-hidden border border-white/10 cursor-pointer"
+               >
+                 {/* Image */}
+                 <img 
+                   src={work.image} 
+                   alt={work.title} 
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                 />
+                 
+                 {/* Overlay */}
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                 
+                 {/* Play Icon */}
+                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                   <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30">
+                     <Play className="w-4 h-4 fill-current" />
+                   </div>
+                 </div>
+
+                 {/* Content */}
+                 <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                   <div className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1 flex items-center justify-between">
+                     <span>{work.platform}</span>
+                     <span>{work.views}</span>
+                   </div>
+                   <h3 className="text-sm font-bold text-white leading-tight line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                     {work.title}
+                   </h3>
+                 </div>
+               </a>
+             ))}
            </div>
         </div>
 

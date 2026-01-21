@@ -4,6 +4,7 @@ import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Home from "@/pages/Home";
 import Portfolio from "@/pages/Portfolio";
+import Matrix from "@/pages/Matrix";
 import Navbar from "@/components/Navbar";
 
 function AppRouter() {
@@ -12,6 +13,7 @@ function AppRouter() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/portfolio" component={Portfolio} />
+        <Route path="/matrix" component={Matrix} />
       </Switch>
     </Router>
   );

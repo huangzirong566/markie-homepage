@@ -26,9 +26,14 @@ export default function Navbar() {
          <span className="font-display font-bold text-2xl tracking-tight italic">Mark.</span>
        </div>
        
-       <div className="flex gap-8">
+       <div className="flex gap-6 md:gap-8">
          <a href="#about" className="text-sm uppercase tracking-widest text-white/60 hover:text-white transition-colors">Profile</a>
          <a href="#works" className="text-sm uppercase tracking-widest text-white/60 hover:text-white transition-colors">Works</a>
+         <a href="#/matrix" className="text-sm uppercase tracking-widest text-white/60 hover:text-white transition-colors flex items-center gap-1">
+           <span className="hidden md:inline">Matrix</span>
+           <span className="md:hidden">All</span>
+           <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+         </a>
        </div>
      </motion.nav>
   );

@@ -3,6 +3,8 @@ import { Download, Play, ExternalLink } from "lucide-react";
 import work1Img from "@/assets/work-gaybar.png";
 import work2Img from "@/assets/work-singer.webp";
 import work3Img from "@/assets/work-canteen.jpg";
+import iconBilibili from "@/assets/icon-bilibili.svg";
+import iconDouyin from "@/assets/icon-douyin.svg";
 
 const history = [
   {
@@ -29,6 +31,7 @@ const works = [
   {
     title: "直男 GAY 吧初体验",
     platform: "Bilibili",
+    icon: iconBilibili,
     url: "https://www.bilibili.com/video/BV1vT5XzbE85",
     image: work1Img,
     views: "1.2w"
@@ -36,6 +39,7 @@ const works = [
   {
     title: "冷门歌手？AI 修复",
     platform: "Douyin",
+    icon: iconDouyin,
     url: "https://www.douyin.com/video/7517631316435946764",
     image: work2Img,
     views: "热门"
@@ -43,6 +47,7 @@ const works = [
   {
     title: "学校食堂？预制菜？",
     platform: "Douyin",
+    icon: iconDouyin,
     url: "https://www.douyin.com/video/7491249976077585690",
     image: work3Img,
     views: "精选"
@@ -57,7 +62,7 @@ export default function ExperienceAndWorks() {
         {/* Left: Experience List */}
         <div>
            <div className="flex items-center justify-between mb-12">
-             <h2 className="text-3xl font-display font-bold text-white">经历与里程碑</h2>
+             <h2 className="text-3xl font-display font-bold text-white">工作经历</h2>
              <a href="/resume.pdf" download className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors border-b border-white/20 pb-0.5">
                <Download className="w-4 h-4" /> 简历 PDF
              </a>
@@ -83,7 +88,7 @@ export default function ExperienceAndWorks() {
         {/* Right: Selected Works */}
         <div>
            <div className="flex items-center justify-between mb-12">
-             <h2 className="text-3xl font-display font-bold text-white">精选作品</h2>
+             <h2 className="text-3xl font-display font-bold text-white">视频作品</h2>
            </div>
            
            {/* Works Container Frame */}
@@ -115,11 +120,9 @@ export default function ExperienceAndWorks() {
                    {/* Info */}
                    <div className="flex-1 min-w-0">
                      <div className="flex items-center gap-2 mb-1">
-                       <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                         work.platform === 'Bilibili' ? 'bg-blue-500/20 text-blue-400' : 'bg-pink-500/20 text-pink-400'
-                       }`}>
-                         {work.platform}
-                       </span>
+                       <div className="w-5 h-5 rounded-full bg-white/10 p-0.5 flex items-center justify-center">
+                         <img src={work.icon} alt={work.platform} className="w-full h-full object-contain" />
+                       </div>
                        <span className="text-[10px] text-white/40 uppercase tracking-wider">{work.views}</span>
                      </div>
                      <h3 className="text-base font-bold text-white leading-snug group-hover:text-emerald-400 transition-colors truncate pr-2">

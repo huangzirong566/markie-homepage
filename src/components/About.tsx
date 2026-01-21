@@ -42,7 +42,7 @@ export default function About() {
           
           {/* Socials */}
           <div>
-            <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">Social Media</span>
+            <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">社交媒体</span>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Bilibili */}
               <a href="https://space.bilibili.com/" target="_blank" className="glass-panel p-6 flex items-center justify-between group hover:bg-white/10 transition-colors cursor-pointer">
@@ -105,7 +105,7 @@ export default function About() {
           {/* Interests & Stack */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">Interests</span>
+               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">兴趣爱好</span>
                <ul className="space-y-4">
                  <li className="flex items-center gap-3 text-white/80">
                    <div className="w-1.5 h-1.5 bg-white/20 rounded-full" /> 
@@ -123,7 +123,7 @@ export default function About() {
             </div>
             
             <div>
-               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">Now Playing</span>
+               <span className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6 block">最近在玩</span>
                <div className="flex flex-wrap gap-2">
                  {['Coze', 'Vibe Coding', 'Multi-modal', 'Vision Pro', 'SD'].map(tech => (
                    <span key={tech} className="px-3 py-1.5 border border-white/10 text-white/60 text-sm hover:text-white hover:border-white/40 transition-colors cursor-default">
@@ -140,9 +140,9 @@ export default function About() {
               <div>
                 <div className="flex items-center gap-2 mb-2 text-purple-400">
                   <Heart className="w-4 h-4 fill-current" />
-                  <span className="text-xs font-bold uppercase tracking-widest">Wish List</span>
+                  <span className="text-xs font-bold uppercase tracking-widest">心愿单</span>
                 </div>
-                <h4 className="text-2xl font-bold text-white mb-1">寻找 AI 产品 Offer & 创业伙伴</h4>
+                <h4 className="text-2xl font-bold text-white mb-1">寻找 AI 产品 Offer / 创业伙伴</h4>
                 <p className="text-white/50 text-sm">Open to new opportunities in Beijing / Remote.</p>
               </div>
             </div>

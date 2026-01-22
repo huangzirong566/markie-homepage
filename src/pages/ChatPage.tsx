@@ -698,20 +698,6 @@ export default function ChatPage() {
         </div>
       </main>
 
-      {/* Upgrade to Pro Button */}
-      <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-30">
-        <button 
-          className="flex flex-col items-center gap-2 bg-[#7C5CFC] hover:bg-[#6B4AEB] text-white pl-2 pr-3 py-5 rounded-l-[16px] transition-colors"
-          style={{ 
-            boxShadow: "0px 4px 20px rgba(124, 92, 252, 0.3)",
-            writingMode: "vertical-rl",
-            textOrientation: "mixed"
-          }}
-        >
-          <Star className="w-[16px] h-[16px] text-[#FBBF24] fill-[#FBBF24] rotate-90" />
-          <span className="text-[12px] font-medium tracking-wide">联系 Mark</span>
-        </button>
-      </div>
     </div>
   );
 }

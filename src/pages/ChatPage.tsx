@@ -37,14 +37,14 @@ interface Conversation {
 }
 
 // Coze API 配置
-const COZE_API_URL = 'https://api.coze.cn/v3/chat';
-const COZE_API_KEY = 'cztei_lWC2lWfRXQgGe6lNEmBWh4jn3G2Y2fsnZRPG19ygLqfRmt6PS6wUFLWmorZ4Jodgu';
+const COZE_API_KEY = 'pat_03i5KSo6wLJy5qQCcC4PGcRrFw7VFywoRJj9ROdd5wLJKCgjlKeDZXUmygoDgRif';
 const BOT_ID = '7598089557539618858';
 
-// 调用 Coze API
+// 调用 Coze API (异步模式 + 轮询)
 async function sendToCoze(message: string): Promise<string> {
   try {
-    const response = await fetch(COZE_API_URL, {
+    // 1. 创建对话
+    const createResponse = await fetch('https://api.coze.cn/v3/chat', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${COZE_API_KEY}`,
@@ -66,41 +66,78 @@ async function sendToCoze(message: string): Promise<string> {
       }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Coze API error:', errorText);
-      throw new Error('API request failed');
+    if (!createResponse.ok) {
+      throw new Error('创建对话失败');
     }
 
-    const data = await response.json();
+    const createData = await createResponse.json();
+    const chatId = createData.data?.id;
+    const conversationId = createData.data?.conversation_id;
+
+    if (!chatId || !conversationId) {
+      throw new Error('无法获取对话ID');
+    }
+
+    // 2. 轮询获取结果
+    let attempts = 0;
+    const maxAttempts = 30; // 最多等待30秒
     
-    // 提取 AI 回复
-    let aiResponse = '';
-    
-    if (data.data && data.data.messages) {
-      const assistantMessage = data.data.messages.find(
-        (msg: { role: string; type: string; content: string }) => 
-          msg.role === 'assistant' && msg.type === 'answer'
+    while (attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const retrieveResponse = await fetch(
+        `https://api.coze.cn/v3/chat/retrieve?chat_id=${chatId}&conversation_id=${conversationId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${COZE_API_KEY}`,
+          },
+        }
       );
-      if (assistantMessage) {
-        aiResponse = assistantMessage.content;
+
+      if (!retrieveResponse.ok) {
+        attempts++;
+        continue;
       }
-    } else if (data.messages) {
-      const assistantMessage = data.messages.find(
-        (msg: { role: string; type: string; content: string }) => 
-          msg.role === 'assistant' && msg.type === 'answer'
-      );
-      if (assistantMessage) {
-        aiResponse = assistantMessage.content;
+
+      const retrieveData = await retrieveResponse.json();
+      const status = retrieveData.data?.status;
+
+      if (status === 'completed') {
+        // 3. 获取消息列表
+        const messagesResponse = await fetch(
+          `https://api.coze.cn/v3/chat/message/list?chat_id=${chatId}&conversation_id=${conversationId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${COZE_API_KEY}`,
+            },
+          }
+        );
+
+        if (messagesResponse.ok) {
+          const messagesData = await messagesResponse.json();
+          const messages = messagesData.data || [];
+          
+          // 找到 assistant 的回复
+          const assistantMessage = messages.find(
+            (msg: { role: string; type: string; content: string }) => 
+              msg.role === 'assistant' && msg.type === 'answer'
+          );
+          
+          if (assistantMessage?.content) {
+            return assistantMessage.content;
+          }
+        }
+        break;
+      } else if (status === 'failed') {
+        throw new Error('对话失败');
       }
+
+      attempts++;
     }
 
-    if (!aiResponse) {
-      console.log('Coze response:', JSON.stringify(data, null, 2));
-      return '抱歉，我暂时无法回复。请稍后再试。';
-    }
-
-    return aiResponse;
+    return '抱歉，响应超时，请稍后再试。';
   } catch (error) {
     console.error('Error calling Coze API:', error);
     return '网络错误，请稍后再试。';

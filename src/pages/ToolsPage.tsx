@@ -121,7 +121,7 @@ export default function ToolsPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            Markdown ↔ JSON 转换器
+            Markdown ⇄ JSON 转换器
           </h1>
           <p className="text-slate-400 mb-6">
             在 Markdown 和 JSON 格式之间快速转换，完全免费

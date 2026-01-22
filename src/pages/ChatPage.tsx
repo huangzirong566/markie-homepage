@@ -159,10 +159,10 @@ export default function ChatPage() {
       </AnimatePresence>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{ x: sidebarOpen ? 0 : "-100%" }}
-        className="fixed md:relative md:translate-x-0 z-50 w-[260px] h-full bg-white md:ml-5 md:my-5 rounded-[24px] flex flex-col overflow-hidden"
+      <aside
+        className={`fixed md:relative z-50 w-[260px] h-full bg-white md:ml-5 md:my-5 rounded-[24px] flex flex-col overflow-hidden transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
         style={{ 
           boxShadow: "0px 4px 60px rgba(0, 0, 0, 0.04)"
         }}
@@ -253,7 +253,7 @@ export default function ChatPage() {
             <span className="text-[14px] font-medium text-[#374151]">Andrew Neilson</span>
           </div>
         </div>
-      </motion.aside>
+      </aside>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-full md:p-5 md:pl-4 overflow-hidden">

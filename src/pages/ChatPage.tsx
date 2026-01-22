@@ -41,24 +41,43 @@ interface Conversation {
 const COZE_API_KEY = 'pat_03i5KSo6wLJy5qQCcC4PGcRrFw7VFywoRJj9ROdd5wLJKCgjlKeDZXUmygoDgRif';
 const BOT_ID = '7598089557539618858';
 
-// 灵感问题列表
-const INSPIRATION_QUESTIONS = [
+// 初始灵感问题
+const INITIAL_INSPIRATIONS = [
   "介绍一下你自己",
   "你有什么特长？",
-  "你的工作经历是什么？",
-  "你对 AI 有什么看法？",
-  "给我讲个有趣的故事",
   "你最近在做什么项目？",
-  "推荐一些学习资源",
-  "如何提高工作效率？",
-  "你的兴趣爱好是什么？",
-  "聊聊你的技术栈",
 ];
 
-// 获取随机灵感问题
-function getRandomQuestions(count: number = 3): string[] {
-  const shuffled = [...INSPIRATION_QUESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+// 根据话题生成延伸问题的映射
+const TOPIC_EXTENSIONS: Record<string, string[]> = {
+  "自己|介绍|是谁": ["你的性格是什么样的？", "你有什么独特的经历？", "你的座右铭是什么？"],
+  "工作|项目|经历": ["这个项目遇到过什么挑战？", "你最有成就感的项目是什么？", "未来有什么计划？"],
+  "AI|人工智能|技术": ["你觉得 AI 会取代人类吗？", "推荐一些 AI 学习资源", "你用过哪些 AI 工具？"],
+  "兴趣|爱好|喜欢": ["你最喜欢的书/电影是什么？", "周末一般怎么度过？", "有什么特别的收藏吗？"],
+  "学习|技能|成长": ["你是怎么学习新技能的？", "有什么学习心得分享？", "推荐一些好用的工具"],
+  "游戏|娱乐|放松": ["你最喜欢什么类型的游戏？", "有什么推荐的休闲方式？", "聊聊你的游戏经历"],
+  "编程|代码|开发": ["你最擅长什么编程语言？", "有什么编程技巧分享？", "聊聊你的技术栈"],
+  "生活|日常|习惯": ["你的一天是怎么安排的？", "有什么好的生活习惯？", "聊聊你的生活态度"],
+};
+
+// 根据消息内容生成延伸问题
+function generateFollowUpQuestions(message: string): string[] {
+  const lowerMsg = message.toLowerCase();
+  
+  for (const [keywords, questions] of Object.entries(TOPIC_EXTENSIONS)) {
+    const keywordList = keywords.split("|");
+    if (keywordList.some(kw => lowerMsg.includes(kw))) {
+      // 随机打乱并返回
+      return [...questions].sort(() => Math.random() - 0.5);
+    }
+  }
+  
+  // 默认问题
+  return [
+    "能详细说说吗？",
+    "还有什么想分享的？",
+    "这个话题很有趣，继续聊聊？",
+  ];
 }
 
 // 本地存储 key
@@ -209,8 +228,16 @@ export default function ChatPage() {
     if (saved.length > 0) {
       setCurrentConvId(saved[0].id);
       setMessages(saved[0].messages);
+      // 根据最后一条用户消息生成延伸问题
+      const lastUserMsg = saved[0].messages.filter(m => m.role === 'user').pop();
+      if (lastUserMsg) {
+        setInspirations(generateFollowUpQuestions(lastUserMsg.content));
+      } else {
+        setInspirations(INITIAL_INSPIRATIONS);
+      }
+    } else {
+      setInspirations(INITIAL_INSPIRATIONS);
     }
-    setInspirations(getRandomQuestions());
   }, []);
 
   // 滚动到底部
@@ -247,7 +274,7 @@ export default function ChatPage() {
     saveConversations(updated);
     setCurrentConvId(newConv.id);
     setMessages([]);
-    setInspirations(getRandomQuestions());
+    setInspirations(INITIAL_INSPIRATIONS);
     setSidebarOpen(false);
   };
 
@@ -256,6 +283,14 @@ export default function ChatPage() {
     setCurrentConvId(conv.id);
     setMessages(conv.messages);
     setSidebarOpen(false);
+    
+    // 根据最后一条用户消息生成延伸问题
+    const lastUserMsg = conv.messages.filter(m => m.role === 'user').pop();
+    if (lastUserMsg) {
+      setInspirations(generateFollowUpQuestions(lastUserMsg.content));
+    } else {
+      setInspirations(INITIAL_INSPIRATIONS);
+    }
   };
 
   // 删除对话
@@ -338,6 +373,9 @@ export default function ChatPage() {
 
       // 保存到后端数据库
       saveChatLog(getVisitorId(), userMessage.content, response);
+
+      // 根据用户消息生成新的延伸问题
+      setInspirations(generateFollowUpQuestions(userMessage.content));
     } catch (error) {
       console.error("Failed to get response:", error);
       const errorMessage: Message = {

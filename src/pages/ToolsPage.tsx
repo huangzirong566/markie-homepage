@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Copy, ArrowLeftRight, Trash2, FileJson, FileText } from "lucide-react";
 
 export default function ToolsPage() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [activeTab, setActiveTab] = useState("md-to-json");
+  const [mode, setMode] = useState<"md-to-json" | "json-to-md">("md-to-json");
 
   // Markdown 转 JSON
   const mdToJson = (md: string): string => {
@@ -26,7 +25,6 @@ export default function ToolsPage() {
     };
 
     for (const line of lines) {
-      // 检测标题
       const h1Match = line.match(/^#\s+(.+)$/);
       const h2Match = line.match(/^##\s+(.+)$/);
       const h3Match = line.match(/^###\s+(.+)$/);
@@ -41,7 +39,6 @@ export default function ToolsPage() {
     }
     saveCurrentSection();
 
-    // 如果没有标题结构，直接返回整个内容
     if (Object.keys(result).length === 0) {
       return JSON.stringify({ content: md }, null, 2);
     }
@@ -51,43 +48,27 @@ export default function ToolsPage() {
 
   // JSON 转 Markdown
   const jsonToMd = (jsonStr: string): string => {
-    try {
-      const obj = JSON.parse(jsonStr);
-      return convertToMd(obj, 1);
-    } catch {
-      throw new Error("无效的 JSON 格式");
-    }
+    const obj = JSON.parse(jsonStr);
+    return convertToMd(obj, 1);
   };
 
   const convertToMd = (obj: unknown, level: number): string => {
-    if (obj === null || obj === undefined) {
-      return "";
-    }
-
-    if (typeof obj !== "object") {
-      return String(obj);
-    }
+    if (obj === null || obj === undefined) return "";
+    if (typeof obj !== "object") return String(obj);
 
     if (Array.isArray(obj)) {
-      return obj
-        .map((item, index) => {
-          if (typeof item === "object" && item !== null) {
-            return `${index + 1}. \n${convertToMd(item, level + 1)}`;
-          }
-          return `- ${item}`;
-        })
-        .join("\n");
+      return obj.map((item) => `- ${typeof item === "object" ? JSON.stringify(item) : item}`).join("\n");
     }
 
     const lines: string[] = [];
     const prefix = "#".repeat(Math.min(level, 6));
 
     for (const [key, value] of Object.entries(obj)) {
+      lines.push(`${prefix} ${key}`);
+      lines.push("");
       if (typeof value === "object" && value !== null) {
-        lines.push(`${prefix} ${key}\n`);
         lines.push(convertToMd(value, level + 1));
       } else {
-        lines.push(`${prefix} ${key}\n`);
         lines.push(String(value));
       }
       lines.push("");
@@ -103,17 +84,14 @@ export default function ToolsPage() {
     }
 
     try {
-      if (activeTab === "md-to-json") {
-        const result = mdToJson(input);
-        setOutput(result);
-        toast.success("转换成功");
+      if (mode === "md-to-json") {
+        setOutput(mdToJson(input));
       } else {
-        const result = jsonToMd(input);
-        setOutput(result);
-        toast.success("转换成功");
+        setOutput(jsonToMd(input));
       }
+      toast.success("转换成功");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "转换失败");
+      toast.error(err instanceof Error ? err.message : "转换失败，请检查格式");
     }
   };
 
@@ -129,7 +107,7 @@ export default function ToolsPage() {
   const handleSwap = () => {
     setInput(output);
     setOutput("");
-    setActiveTab(activeTab === "md-to-json" ? "json-to-md" : "md-to-json");
+    setMode(mode === "md-to-json" ? "json-to-md" : "md-to-json");
   };
 
   const handleClear = () => {
@@ -138,37 +116,41 @@ export default function ToolsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-20 pb-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-24 pb-12">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Markdown ↔ JSON 转换器
           </h1>
-          <p className="text-slate-400">
+          <p className="text-slate-400 mb-6">
             在 Markdown 和 JSON 格式之间快速转换，完全免费
           </p>
-        </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-slate-800/50">
-            <TabsTrigger
-              value="md-to-json"
-              className="data-[state=active]:bg-violet-600"
+          {/* Mode Toggle */}
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant={mode === "md-to-json" ? "default" : "outline"}
+              onClick={() => setMode("md-to-json")}
+              className={mode === "md-to-json" 
+                ? "bg-violet-600 hover:bg-violet-700" 
+                : "border-slate-700 text-slate-300 hover:bg-slate-800"}
             >
               <FileText className="w-4 h-4 mr-2" />
               MD → JSON
-            </TabsTrigger>
-            <TabsTrigger
-              value="json-to-md"
-              className="data-[state=active]:bg-violet-600"
+            </Button>
+            <Button
+              variant={mode === "json-to-md" ? "default" : "outline"}
+              onClick={() => setMode("json-to-md")}
+              className={mode === "json-to-md" 
+                ? "bg-violet-600 hover:bg-violet-700" 
+                : "border-slate-700 text-slate-300 hover:bg-slate-800"}
             >
               <FileJson className="w-4 h-4 mr-2" />
               JSON → MD
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </Button>
+          </div>
+        </div>
 
         {/* Main Content */}
         <div className="grid md:grid-cols-2 gap-4">
@@ -176,7 +158,7 @@ export default function ToolsPage() {
           <Card className="bg-slate-900/50 border-slate-800 p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-white font-medium flex items-center gap-2">
-                {activeTab === "md-to-json" ? (
+                {mode === "md-to-json" ? (
                   <>
                     <FileText className="w-4 h-4 text-emerald-400" />
                     Markdown 输入
@@ -201,7 +183,7 @@ export default function ToolsPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={
-                activeTab === "md-to-json"
+                mode === "md-to-json"
                   ? "# 标题\n\n内容...\n\n## 子标题\n\n更多内容..."
                   : '{\n  "title": "标题",\n  "content": "内容"\n}'
               }
@@ -213,7 +195,7 @@ export default function ToolsPage() {
           <Card className="bg-slate-900/50 border-slate-800 p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-white font-medium flex items-center gap-2">
-                {activeTab === "md-to-json" ? (
+                {mode === "md-to-json" ? (
                   <>
                     <FileJson className="w-4 h-4 text-amber-400" />
                     JSON 输出

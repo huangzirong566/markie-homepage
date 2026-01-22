@@ -8,6 +8,7 @@ import Matrix from "@/pages/Matrix";
 import ContactPage from "@/pages/ContactPage";
 import ChatPage from "@/pages/ChatPage";
 import ToolsPage from "@/pages/ToolsPage";
+import SunnyMapPage from "@/pages/SunnyMapPage";
 import Navbar from "@/components/Navbar";
 
 function AppRouter() {
@@ -24,6 +25,7 @@ function AppRouter() {
         <Route path="/contact" component={ContactPage} />
         <Route path="/chat" component={ChatPage} />
         <Route path="/tools" component={ToolsPage} />
+        <Route path="/sunny-map" component={SunnyMapPage} />
       </Switch>
     </>
   );

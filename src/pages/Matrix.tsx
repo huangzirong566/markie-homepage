@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Store, User, FileText, Sparkles, Rocket, MessageCircle, Bot } from "lucide-react";
+import { Store, User, FileText, Sparkles, MessageCircle, Bot, Sun } from "lucide-react";
 
 interface MatrixItem {
   title: string;
@@ -50,6 +50,14 @@ const matrixItems: MatrixItem[] = [
     url: "#",
     color: "from-amber-500 to-orange-500",
     status: "coming",
+  },
+  {
+    title: "晴天地图",
+    description: "实时查看全国晴天城市",
+    icon: <Sun className="w-8 h-8" />,
+    url: "#/sunny-map",
+    color: "from-yellow-400 to-amber-500",
+    status: "live",
   },
   {
     title: "联系我",

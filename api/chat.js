@@ -1,10 +1,8 @@
 // Vercel Serverless Function - 代理 Coze API
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
 const COZE_API_URL = 'https://api.coze.cn/v3/chat';
 const BOT_ID = '7598089557539618858';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -24,7 +22,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Message is required' });
   }
 
-  // 从环境变量获取 API Key
   const apiKey = process.env.COZE_API_KEY;
   
   if (!apiKey) {
@@ -41,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         bot_id: BOT_ID,
         user_id: userId || `user_${Date.now()}`,
-        stream: false, // 非流式，简化处理
+        stream: false,
         additional_messages: [
           {
             content: message,
@@ -62,27 +59,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const data = await response.json();
     
-    // 提取 AI 回复内容
     let aiResponse = '';
     
     if (data.data && data.data.messages) {
-      // 找到 assistant 的回复
       const assistantMessage = data.data.messages.find(
-        (msg: any) => msg.role === 'assistant' && msg.type === 'answer'
+        (msg) => msg.role === 'assistant' && msg.type === 'answer'
       );
       if (assistantMessage) {
         aiResponse = assistantMessage.content;
       }
     } else if (data.messages) {
       const assistantMessage = data.messages.find(
-        (msg: any) => msg.role === 'assistant' && msg.type === 'answer'
+        (msg) => msg.role === 'assistant' && msg.type === 'answer'
       );
       if (assistantMessage) {
         aiResponse = assistantMessage.content;
       }
     }
 
-    // 如果没找到回复，返回原始数据供调试
     if (!aiResponse) {
       console.log('Coze response:', JSON.stringify(data, null, 2));
       aiResponse = '抱歉，我暂时无法回复。请稍后再试。';
@@ -91,7 +85,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ 
       success: true, 
       message: aiResponse,
-      raw: data // 调试用
+      raw: data
     });
 
   } catch (error) {

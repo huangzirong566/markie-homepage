@@ -36,35 +36,19 @@ interface Conversation {
   isActive?: boolean;
 }
 
-// 调用 Coze API（通过后端代理）
+// 模拟 AI 回复（Coze API 接口预留）
 async function sendToCoze(message: string): Promise<string> {
-  try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message,
-        userId: `user_${Date.now()}`,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('API request failed');
-    }
-
-    const data = await response.json();
-    
-    if (data.success && data.message) {
-      return data.message;
-    }
-    
-    return '抱歉，我暂时无法回复。请稍后再试。';
-  } catch (error) {
-    console.error('Error calling API:', error);
-    return '网络错误，请稍后再试。';
-  }
+  // 模拟延迟
+  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+  
+  // 模拟回复
+  const responses = [
+    "这是一个很好的问题！让我来帮你分析一下...\n\n基于你的描述，我建议可以从以下几个方面入手：\n\n1. **明确目标** - 首先确定你想要达成的具体目标\n2. **制定计划** - 根据目标制定可执行的计划\n3. **持续迭代** - 在实践中不断调整和优化",
+    "我理解你的需求。这个问题涉及到几个关键点：\n\n**首先**，我们需要理解背景和上下文。\n\n**其次**，考虑可能的解决方案。\n\n**最后**，选择最适合当前情况的方案。\n\n如果你有更多具体的问题，欢迎继续提问！",
+    "感谢你的提问！我来为你详细解答：\n\n这个话题非常有趣，涉及到多个层面的考量。在实际应用中，我们通常会：\n\n1. 分析需求和现状\n2. 研究可行的技术方案\n3. 进行原型验证\n4. 迭代优化\n\n希望这些信息对你有帮助！",
+  ];
+  
+  return responses[Math.floor(Math.random() * responses.length)];
 }
 
 export default function ChatPage() {

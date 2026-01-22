@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import avatarImg from "@/assets/avatar.jpg";
+import avatarImg from "@/assets/avatar.jpeg";
 import { Github, Mail } from "lucide-react";
 import iconBilibili from "@/assets/icon-bilibili.svg";
 import iconDouyin from "@/assets/icon-douyin.svg";

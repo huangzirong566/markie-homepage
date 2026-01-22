@@ -1,31 +1,46 @@
-// Vercel Serverless Function - 代理 Coze API
+export const config = {
+  runtime: 'edge',
+};
+
 const COZE_API_URL = 'https://api.coze.cn/v3/chat';
 const BOT_ID = '7598089557539618858';
 
-export default async function handler(req, res) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+export default async function handler(request) {
+  // CORS preflight
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  const { message, userId } = req.body;
+  const { message, userId } = await request.json();
 
   if (!message) {
-    return res.status(400).json({ error: 'Message is required' });
+    return new Response(JSON.stringify({ error: 'Message is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const apiKey = process.env.COZE_API_KEY;
   
   if (!apiKey) {
-    return res.status(500).json({ error: 'COZE_API_KEY not configured' });
+    return new Response(JSON.stringify({ error: 'COZE_API_KEY not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
@@ -53,8 +68,10 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Coze API error:', errorText);
-      return res.status(response.status).json({ error: 'Coze API error', details: errorText });
+      return new Response(JSON.stringify({ error: 'Coze API error', details: errorText }), {
+        status: response.status,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const data = await response.json();
@@ -78,18 +95,21 @@ export default async function handler(req, res) {
     }
 
     if (!aiResponse) {
-      console.log('Coze response:', JSON.stringify(data, null, 2));
       aiResponse = '抱歉，我暂时无法回复。请稍后再试。';
     }
 
-    return res.status(200).json({ 
-      success: true, 
-      message: aiResponse,
-      raw: data
+    return new Response(JSON.stringify({ success: true, message: aiResponse }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
     });
 
   } catch (error) {
-    console.error('Error calling Coze API:', error);
-    return res.status(500).json({ error: 'Failed to call Coze API' });
+    return new Response(JSON.stringify({ error: 'Failed to call Coze API' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }

@@ -7,6 +7,7 @@ import Portfolio from "@/pages/Portfolio";
 import Matrix from "@/pages/Matrix";
 import ContactPage from "@/pages/ContactPage";
 import ChatPage from "@/pages/ChatPage";
+import ToolsPage from "@/pages/ToolsPage";
 import Navbar from "@/components/Navbar";
 
 function AppRouter() {
@@ -22,6 +23,7 @@ function AppRouter() {
         <Route path="/matrix" component={Matrix} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/chat" component={ChatPage} />
+        <Route path="/tools" component={ToolsPage} />
       </Switch>
     </>
   );

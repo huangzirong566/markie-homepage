@@ -84,6 +84,29 @@ function loadConversations(): Conversation[] {
   }
 }
 
+// 保存聊天记录到后端
+async function saveChatLog(visitorId: string, question: string, answer: string) {
+  try {
+    await fetch('https://store.cozer.us/api/chat-logs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ visitorId, question, answer }),
+    });
+  } catch (e) {
+    console.error('Failed to save chat log:', e);
+  }
+}
+
+// 获取或创建访客 ID
+function getVisitorId(): string {
+  let id = localStorage.getItem('cozer_visitor_id');
+  if (!id) {
+    id = `v_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    localStorage.setItem('cozer_visitor_id', id);
+  }
+  return id;
+}
+
 // 调用 Coze API (优化轮询间隔)
 async function sendToCoze(message: string): Promise<string> {
   try {
@@ -312,6 +335,9 @@ export default function ChatPage() {
         saveConversations(updated);
         return updated;
       });
+
+      // 保存到后端数据库
+      saveChatLog(getVisitorId(), userMessage.content, response);
     } catch (error) {
       console.error("Failed to get response:", error);
       const errorMessage: Message = {

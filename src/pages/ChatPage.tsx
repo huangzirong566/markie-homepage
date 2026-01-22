@@ -389,7 +389,10 @@ export default function ChatPage() {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 忽略输入法组合状态（中文输入时按回车是确认输入）
+    if (e.nativeEvent.isComposing) return;
+    
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();

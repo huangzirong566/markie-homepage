@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Store, User, FileText, Sparkles, Rocket, MessageCircle } from "lucide-react";
+import { Store, User, FileText, Sparkles, Rocket, MessageCircle, Bot } from "lucide-react";
 
 interface MatrixItem {
   title: string;
@@ -12,6 +12,14 @@ interface MatrixItem {
 
 const matrixItems: MatrixItem[] = [
   {
+    title: "AI 分身",
+    description: "和我的 AI 分身对话",
+    icon: <Bot className="w-8 h-8" />,
+    url: "#/chat",
+    color: "from-blue-500 to-indigo-600",
+    status: "live",
+  },
+  {
     title: "插件商店",
     description: "API 插件市场，按需付费",
     icon: <Store className="w-8 h-8" />,
@@ -23,8 +31,8 @@ const matrixItems: MatrixItem[] = [
     title: "个人主页",
     description: "了解我的经历与作品",
     icon: <User className="w-8 h-8" />,
-    url: "/",
-    color: "from-blue-500 to-cyan-500",
+    url: "#/",
+    color: "from-cyan-500 to-teal-500",
     status: "live",
   },
   {
@@ -32,7 +40,7 @@ const matrixItems: MatrixItem[] = [
     description: "分享技术文章与心得",
     icon: <FileText className="w-8 h-8" />,
     url: "#",
-    color: "from-emerald-500 to-teal-500",
+    color: "from-emerald-500 to-green-500",
     status: "coming",
   },
   {
@@ -44,19 +52,11 @@ const matrixItems: MatrixItem[] = [
     status: "coming",
   },
   {
-    title: "开源项目",
-    description: "我的开源作品集",
-    icon: <Rocket className="w-8 h-8" />,
-    url: "#",
-    color: "from-rose-500 to-pink-500",
-    status: "coming",
-  },
-  {
     title: "联系我",
     description: "商务合作与交流",
     icon: <MessageCircle className="w-8 h-8" />,
     url: "#/contact",
-    color: "from-indigo-500 to-violet-500",
+    color: "from-pink-500 to-rose-500",
     status: "live",
   },
 ];

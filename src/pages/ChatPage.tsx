@@ -451,10 +451,19 @@ export default function ChatPage() {
         {/* Logo */}
         <div className="px-6 pt-6 pb-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-[22px] font-bold text-[#1a1a1a] tracking-tight">Mark AI</h1>
-            <button onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
-              <X className="w-5 h-5" />
-            </button>
+            <a href="#/" className="text-[22px] font-bold text-[#1a1a1a] tracking-tight hover:text-[#5B7BF9] transition-colors">
+              Mark AI
+            </a>
+            <div className="flex items-center gap-2">
+              <a href="#/" className="text-gray-400 hover:text-[#5B7BF9] transition-colors" title="返回主页">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </a>
+              <button onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -537,7 +546,11 @@ export default function ChatPage() {
               <Menu className="w-6 h-6" />
             </button>
             <span className="font-bold text-[#1a1a1a]">Mark AI</span>
-            <div className="w-6" />
+            <a href="#/" className="text-gray-400 hover:text-[#5B7BF9]" title="返回主页">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </a>
           </header>
 
           {/* Messages */}

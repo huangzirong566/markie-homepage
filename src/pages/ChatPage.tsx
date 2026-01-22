@@ -36,23 +36,35 @@ interface Conversation {
   isActive?: boolean;
 }
 
-// 预留的智能体接口
-interface AgentConfig {
-  apiEndpoint?: string;
-  botId?: string;
-  apiKey?: string;
-}
+// 调用 Coze API（通过后端代理）
+async function sendToCoze(message: string): Promise<string> {
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        userId: `user_${Date.now()}`,
+      }),
+    });
 
-// TODO: 接入 Coze 时替换这个函数
-async function sendToAgent(message: string, config: AgentConfig): Promise<string> {
-  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
-  
-  const responses = [
-    "Sure, I can help you get started with creating a chatbot using GPT in Python. Here are the basic steps you'll need to follow:\n\n1. **Install the required libraries:** You'll need to install the transformers library from Hugging Face to use GPT. You can install it using pip.\n\n2. **Load the pre-trained model:** GPT comes in several sizes and versions, so you'll need to choose the one that fits your needs. You can load a pre-trained GPT model. This loads the 1.3B parameter version of GPT-Neo, which is a powerful and relatively recent model.\n\n3. **Create a chatbot loop:** You'll need to create a loop that takes user input, generates a response using the GPT model, and outputs it to the user. Here's an example loop that uses the input() function to get user input and the gpt() function to generate a response. This loop will keep running until the user exits the program or the loop is interrupted.\n\n4. **Add some personality to the chatbot:** While GPT can generate text, it doesn't have any inherent personality or style. You can make your chatbot more interesting by adding custom prompts or responses that reflect your desired personality. You can then modify the chatbot loop to use these prompts and responses when appropriate. This will make the chatbot seem more human-like and engaging.\n\nThese are just the basic steps to get started with a GPT chatbot in Python. Depending on your requirements, you may need to add more features or complexity to the chatbot. Good luck!",
-    "Chatbots can be used for a wide range of purposes, including:\n\nCustomer service chatbots can handle frequently asked questions, provide basic support, and help customers navigate your website or app.",
-  ];
-  
-  return responses[Math.floor(Math.random() * responses.length)];
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+
+    const data = await response.json();
+    
+    if (data.success && data.message) {
+      return data.message;
+    }
+    
+    return '抱歉，我暂时无法回复。请稍后再试。';
+  } catch (error) {
+    console.error('Error calling API:', error);
+    return '网络错误，请稍后再试。';
+  }
 }
 
 export default function ChatPage() {
@@ -85,8 +97,6 @@ export default function ChatPage() {
   const [currentConvId, setCurrentConvId] = useState("6");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const agentConfig: AgentConfig = {};
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -105,10 +115,11 @@ export default function ChatPage() {
     setIsLoading(true);
 
     try {
-      const response = await sendToAgent(userMessage.content, agentConfig);
+      const response = await sendToCoze(userMessage.content);
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: response }]);
     } catch (error) {
       console.error("Failed to get response:", error);
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "抱歉，出现了一些问题，请稍后再试。" }]);
     } finally {
       setIsLoading(false);
     }

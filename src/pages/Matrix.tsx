@@ -47,9 +47,9 @@ const matrixItems: MatrixItem[] = [
     title: "AI 工具集",
     description: "实用的 AI 小工具",
     icon: <Sparkles className="w-8 h-8" />,
-    url: "#",
+    url: "#/tools",
     color: "from-amber-500 to-orange-500",
-    status: "coming",
+    status: "live",
   },
   {
     title: "晴天地图",

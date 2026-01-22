@@ -9,7 +9,7 @@ import {
   ThumbsUp, 
   ThumbsDown, 
   Copy, 
-  MoreHorizontal,
+  MoreVertical,
   RotateCcw,
   Menu,
   X,
@@ -26,7 +26,6 @@ interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
-  timestamp: Date;
 }
 
 // 对话类型
@@ -34,7 +33,7 @@ interface Conversation {
   id: string;
   title: string;
   messages: Message[];
-  createdAt: Date;
+  isActive?: boolean;
 }
 
 // 预留的智能体接口
@@ -49,28 +48,22 @@ async function sendToAgent(message: string, config: AgentConfig): Promise<string
   await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
   
   const responses = [
-    "Sure, I can help you get started with creating a chatbot using GPT in Python. Here are the basic steps you'll need to follow:\n\n1. **Install the required libraries:** You'll need to install the transformers library from Hugging Face to use GPT. You can install it using pip.\n\n2. **Load the pre-trained model:** GPT comes in several sizes and versions, so you'll need to choose the one that fits your needs.\n\n3. **Create a chatbot loop:** You'll need to create a loop that takes user input, generates a response using the GPT model, and outputs it to the user.\n\n4. **Add some personality to the chatbot:** While GPT can generate text, it doesn't have any inherent personality or style. You can make your chatbot more interesting by adding custom prompts.",
-    "Hello! I'm Mark's AI avatar. How can I help you today?\n\nI can answer questions about:\n- My work experience\n- Projects and portfolio\n- Technical skills\n- Personal interests",
-    "That's a great question! Let me think about it...\n\nAs an AI product intern, I believe the most important thing is understanding the balance between user needs and technical capabilities.",
+    "Sure, I can help you get started with creating a chatbot using GPT in Python. Here are the basic steps you'll need to follow:\n\n1. **Install the required libraries:** You'll need to install the transformers library from Hugging Face to use GPT. You can install it using pip.\n\n2. **Load the pre-trained model:** GPT comes in several sizes and versions, so you'll need to choose the one that fits your needs. You can load a pre-trained GPT model. This loads the 1.3B parameter version of GPT-Neo, which is a powerful and relatively recent model.\n\n3. **Create a chatbot loop:** You'll need to create a loop that takes user input, generates a response using the GPT model, and outputs it to the user. Here's an example loop that uses the input() function to get user input and the gpt() function to generate a response. This loop will keep running until the user exits the program or the loop is interrupted.\n\n4. **Add some personality to the chatbot:** While GPT can generate text, it doesn't have any inherent personality or style. You can make your chatbot more interesting by adding custom prompts or responses that reflect your desired personality. You can then modify the chatbot loop to use these prompts and responses when appropriate. This will make the chatbot seem more human-like and engaging.\n\nThese are just the basic steps to get started with a GPT chatbot in Python. Depending on your requirements, you may need to add more features or complexity to the chatbot. Good luck!",
+    "Chatbots can be used for a wide range of purposes, including:\n\nCustomer service chatbots can handle frequently asked questions, provide basic support, and help customers navigate your website or app.",
   ];
   
   return responses[Math.floor(Math.random() * responses.length)];
 }
 
 export default function ChatPage() {
-  const [conversations, setConversations] = useState<Conversation[]>([
-    { id: "1", title: "Create Chatbot GPT...", messages: [
-      { id: "1", role: "user", content: "Create a chatbot gpt using python language what will be step for that", timestamp: new Date() },
-      { id: "2", role: "assistant", content: "Sure, I can help you get started with creating a chatbot using GPT in Python. Here are the basic steps you'll need to follow:\n\n1. **Install the required libraries:** You'll need to install the transformers library from Hugging Face to use GPT. You can install it using pip.\n\n2. **Load the pre-trained model:** GPT comes in several sizes and versions, so you'll need to choose the one that fits your needs. You can load a pre-trained GPT model. This loads the 1.3B parameter version of GPT-Neo, which is a powerful and relatively recent model.\n\n3. **Create a chatbot loop:** You'll need to create a loop that takes user input, generates a response using the GPT model, and outputs it to the user. Here's an example loop that uses the input() function to get user input and the gpt() function to generate a response. This loop will keep running until the user exits the program or the loop is interrupted.\n\n4. **Add some personality to the chatbot:** While GPT can generate text, it doesn't have any inherent personality or style. You can make your chatbot more interesting by adding custom prompts or responses that reflect your desired personality. You can then modify the chatbot loop to use these prompts and responses when appropriate. This will make the chatbot seem more human-like and engaging.\n\nThese are just the basic steps to get started with a GPT chatbot in Python. Depending on your requirements, you may need to add more features or complexity to the chatbot. Good luck!", timestamp: new Date() },
-      { id: "3", role: "user", content: "What is use of that chatbot ?", timestamp: new Date() },
-      { id: "4", role: "assistant", content: "Chatbots can be used for a wide range of purposes, including:\n\nCustomer service chatbots can handle frequently asked questions, provide basic support, and help customers navigate...", timestamp: new Date() },
-    ], createdAt: new Date() },
-    { id: "2", title: "Create Html Game Environment...", messages: [], createdAt: new Date() },
-    { id: "3", title: "Apply To Leave For Emergency", messages: [], createdAt: new Date() },
-    { id: "4", title: "What Is UI UX Design?", messages: [], createdAt: new Date() },
-    { id: "5", title: "Create POS System", messages: [], createdAt: new Date() },
-    { id: "6", title: "What Is UX Audit?", messages: [], createdAt: new Date() },
-    { id: "7", title: "How Chat GPT Work?", messages: [], createdAt: new Date() },
+  const [conversations] = useState<Conversation[]>([
+    { id: "1", title: "Create Html Game Environment...", messages: [], isActive: false },
+    { id: "2", title: "Apply To Leave For Emergency", messages: [], isActive: false },
+    { id: "3", title: "What Is UI UX Design?", messages: [], isActive: false },
+    { id: "4", title: "Create POS System", messages: [], isActive: false },
+    { id: "5", title: "What Is UX Audit?", messages: [], isActive: false },
+    { id: "6", title: "Create Chatbot GPT...", messages: [], isActive: true },
+    { id: "7", title: "How Chat GPT Work?", messages: [], isActive: false },
   ]);
   
   const [olderConversations] = useState([
@@ -79,19 +72,24 @@ export default function ChatPage() {
     { id: "10", title: "Min States For Binary DFA" },
   ]);
 
-  const [currentConvId, setCurrentConvId] = useState("1");
+  const [messages, setMessages] = useState<Message[]>([
+    { id: "1", role: "user", content: "Create a chatbot gpt using python language what will be step for that" },
+    { id: "2", role: "assistant", content: "Sure, I can help you get started with creating a chatbot using GPT in Python. Here are the basic steps you'll need to follow:\n\n1. **Install the required libraries:** You'll need to install the transformers library from Hugging Face to use GPT. You can install it using pip.\n\n2. **Load the pre-trained model:** GPT comes in several sizes and versions, so you'll need to choose the one that fits your needs. You can load a pre-trained GPT model. This loads the 1.3B parameter version of GPT-Neo, which is a powerful and relatively recent model.\n\n3. **Create a chatbot loop:** You'll need to create a loop that takes user input, generates a response using the GPT model, and outputs it to the user. Here's an example loop that uses the input() function to get user input and the gpt() function to generate a response. This loop will keep running until the user exits the program or the loop is interrupted.\n\n4. **Add some personality to the chatbot:** While GPT can generate text, it doesn't have any inherent personality or style. You can make your chatbot more interesting by adding custom prompts or responses that reflect your desired personality. You can then modify the chatbot loop to use these prompts and responses when appropriate. This will make the chatbot seem more human-like and engaging.\n\nThese are just the basic steps to get started with a GPT chatbot in Python. Depending on your requirements, you may need to add more features or complexity to the chatbot. Good luck!" },
+    { id: "3", role: "user", content: "What is use of that chatbot ?" },
+    { id: "4", role: "assistant", content: "Chatbots can be used for a wide range of purposes, including:\n\nCustomer service chatbots can handle frequently asked questions, provide basic support, and help customers navigate..." },
+  ]);
+
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentConvId, setCurrentConvId] = useState("6");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const agentConfig: AgentConfig = {};
 
-  const currentConversation = conversations.find(c => c.id === currentConvId);
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [currentConversation?.messages]);
+  }, [messages]);
 
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -100,49 +98,20 @@ export default function ChatPage() {
       id: Date.now().toString(),
       role: "user",
       content: inputValue.trim(),
-      timestamp: new Date(),
     };
 
-    setConversations(prev => prev.map(conv => 
-      conv.id === currentConvId 
-        ? { ...conv, messages: [...conv.messages, userMessage] }
-        : conv
-    ));
+    setMessages(prev => [...prev, userMessage]);
     setInputValue("");
     setIsLoading(true);
 
     try {
       const response = await sendToAgent(userMessage.content, agentConfig);
-      
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
-      };
-
-      setConversations(prev => prev.map(conv => 
-        conv.id === currentConvId 
-          ? { ...conv, messages: [...conv.messages, assistantMessage] }
-          : conv
-      ));
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: response }]);
     } catch (error) {
       console.error("Failed to get response:", error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleNewChat = () => {
-    const newConv: Conversation = {
-      id: Date.now().toString(),
-      title: "New Chat",
-      messages: [],
-      createdAt: new Date(),
-    };
-    setConversations(prev => [newConv, ...prev]);
-    setCurrentConvId(newConv.id);
-    setSidebarOpen(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -152,8 +121,35 @@ export default function ChatPage() {
     }
   };
 
+  // 渲染消息内容（处理加粗）
+  const renderContent = (content: string) => {
+    const lines = content.split('\n');
+    return lines.map((line, i) => {
+      // 处理编号列表 + 加粗
+      const listMatch = line.match(/^(\d+\.)\s\*\*(.+?)\*\*(.*)$/);
+      if (listMatch) {
+        return (
+          <p key={i} className="mt-4 first:mt-0">
+            <span>{listMatch[1]} </span>
+            <strong className="font-semibold text-[#1a1a1a]">{listMatch[2]}</strong>
+            <span>{listMatch[3]}</span>
+          </p>
+        );
+      }
+      // 空行
+      if (!line.trim()) return <div key={i} className="h-4" />;
+      // 普通文本
+      return <p key={i} className="mt-0">{line}</p>;
+    });
+  };
+
   return (
-    <div className="min-h-screen flex" style={{ background: "linear-gradient(135deg, #FDF8F3 0%, #F5EDE6 50%, #FDF5F0 100%)" }}>
+    <div 
+      className="min-h-screen h-screen flex overflow-hidden"
+      style={{ 
+        background: "linear-gradient(180deg, #F8F5F1 0%, #F5F0EB 50%, #FDF8F4 100%)"
+      }}
+    >
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -171,57 +167,60 @@ export default function ChatPage() {
       <motion.aside
         initial={false}
         animate={{ x: sidebarOpen ? 0 : "-100%" }}
-        className="fixed md:relative md:translate-x-0 z-50 w-[280px] h-screen bg-white md:m-4 md:rounded-3xl shadow-xl flex flex-col overflow-hidden"
-        style={{ boxShadow: "0 4px 40px rgba(0,0,0,0.08)" }}
+        className="fixed md:relative md:translate-x-0 z-50 w-[260px] h-full bg-white md:ml-5 md:my-5 rounded-[24px] flex flex-col overflow-hidden"
+        style={{ 
+          boxShadow: "0px 4px 60px rgba(0, 0, 0, 0.04)"
+        }}
       >
-        {/* Header */}
-        <div className="p-5">
-          <div className="flex items-center justify-between mb-5">
-            <h1 className="text-xl font-bold text-gray-900 tracking-tight">CHAT A.I+</h1>
+        {/* Logo */}
+        <div className="px-6 pt-6 pb-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-[22px] font-bold text-[#1a1a1a] tracking-tight">CHAT A.I+</h1>
             <button onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
               <X className="w-5 h-5" />
             </button>
           </div>
-          
-          <div className="flex gap-2">
-            <button
-              onClick={handleNewChat}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#5B7BF9] hover:bg-[#4A6AE8] text-white rounded-xl font-medium transition-colors text-sm"
-            >
-              <Plus className="w-4 h-4" />
-              New chat
-            </button>
-            <button className="w-12 h-12 flex items-center justify-center bg-[#5B7BF9] hover:bg-[#4A6AE8] text-white rounded-xl transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
-          </div>
         </div>
 
-        {/* Conversations */}
+        {/* New Chat & Search */}
+        <div className="px-4 pb-4 flex gap-2">
+          <button className="flex-1 flex items-center justify-center gap-2 h-[48px] bg-[#5B7BF9] hover:bg-[#4A6AE8] text-white rounded-[14px] font-medium transition-colors text-[15px]">
+            <Plus className="w-[18px] h-[18px]" />
+            New chat
+          </button>
+          <button className="w-[48px] h-[48px] flex items-center justify-center bg-[#5B7BF9] hover:bg-[#4A6AE8] text-white rounded-[14px] transition-colors">
+            <Search className="w-[18px] h-[18px]" />
+          </button>
+        </div>
+
+        {/* Conversations Header */}
+        <div className="px-6 py-2 flex items-center justify-between">
+          <span className="text-[13px] text-[#9CA3AF]">Your conversations</span>
+          <button className="text-[13px] text-[#5B7BF9] hover:underline">Clear All</button>
+        </div>
+
+        {/* Conversations List */}
         <div className="flex-1 overflow-y-auto px-3">
-          <div className="flex items-center justify-between px-2 py-3">
-            <span className="text-xs text-gray-400">Your conversations</span>
-            <button className="text-xs text-[#5B7BF9] hover:underline">Clear All</button>
-          </div>
-          
-          <div className="space-y-1">
-            {conversations.slice(0, 7).map(conv => (
+          <div className="space-y-0.5">
+            {conversations.map(conv => (
               <button
                 key={conv.id}
-                onClick={() => { setCurrentConvId(conv.id); setSidebarOpen(false); }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all text-sm ${
-                  conv.id === currentConvId 
-                    ? "bg-[#EEF2FF] text-gray-900" 
-                    : "text-gray-600 hover:bg-gray-50"
+                onClick={() => setCurrentConvId(conv.id)}
+                className={`w-full flex items-center gap-3 px-3 py-[10px] rounded-[12px] text-left transition-all text-[14px] group ${
+                  conv.id === currentConvId
+                    ? "bg-[#EEF2FF]" 
+                    : "hover:bg-[#F9FAFB]"
                 }`}
               >
-                <MessageSquare className="w-4 h-4 text-gray-400 shrink-0" />
-                <span className="truncate flex-1">{conv.title}</span>
+                <MessageSquare className={`w-[16px] h-[16px] shrink-0 ${conv.id === currentConvId ? "text-[#6B7280]" : "text-[#D1D5DB]"}`} />
+                <span className={`truncate flex-1 ${conv.id === currentConvId ? "text-[#1F2937]" : "text-[#6B7280]"}`}>
+                  {conv.title}
+                </span>
                 {conv.id === currentConvId && (
-                  <div className="flex items-center gap-1">
-                    <Trash2 className="w-3.5 h-3.5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                    <Edit3 className="w-3.5 h-3.5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                    <div className="w-2 h-2 rounded-full bg-[#5B7BF9]" />
+                  <div className="flex items-center gap-1.5">
+                    <Trash2 className="w-[14px] h-[14px] text-[#9CA3AF] hover:text-[#6B7280] cursor-pointer" />
+                    <Edit3 className="w-[14px] h-[14px] text-[#9CA3AF] hover:text-[#6B7280] cursor-pointer" />
+                    <div className="w-[8px] h-[8px] rounded-full bg-[#5B7BF9] ml-1" />
                   </div>
                 )}
               </button>
@@ -229,15 +228,15 @@ export default function ChatPage() {
           </div>
 
           {/* Last 7 Days */}
-          <div className="mt-4">
-            <span className="text-xs text-gray-400 px-2">Last 7 Days</span>
-            <div className="mt-2 space-y-1">
+          <div className="mt-4 pt-2">
+            <span className="text-[12px] text-[#9CA3AF] px-3">Last 7 Days</span>
+            <div className="mt-2 space-y-0.5">
               {olderConversations.map(conv => (
                 <button
                   key={conv.id}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-gray-500 hover:bg-gray-50 transition-all text-sm"
+                  className="w-full flex items-center gap-3 px-3 py-[10px] rounded-[12px] text-left text-[#9CA3AF] hover:bg-[#F9FAFB] transition-all text-[14px]"
                 >
-                  <MessageSquare className="w-4 h-4 text-gray-300 shrink-0" />
+                  <MessageSquare className="w-[16px] h-[16px] text-[#E5E7EB] shrink-0" />
                   <span className="truncate">{conv.title}</span>
                 </button>
               ))}
@@ -246,102 +245,91 @@ export default function ChatPage() {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-100">
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 transition-all text-sm mb-2">
-            <Settings className="w-4 h-4 text-gray-400" />
+        <div className="p-4 mt-auto">
+          <button className="w-full flex items-center gap-3 px-3 py-[10px] rounded-[12px] text-[#6B7280] hover:bg-[#F9FAFB] transition-all text-[14px]">
+            <Settings className="w-[18px] h-[18px] text-[#9CA3AF]" />
             <span>Settings</span>
           </button>
           
-          <div className="flex items-center gap-3 px-3 py-2">
-            <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-200">
+          <div className="flex items-center gap-3 px-3 py-3 mt-1">
+            <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#E5E7EB]">
               <img src={avatarImg} alt="User" className="w-full h-full object-cover" />
             </div>
-            <span className="text-sm font-medium text-gray-700">Mark</span>
+            <span className="text-[14px] font-medium text-[#374151]">Andrew Neilson</span>
           </div>
         </div>
       </motion.aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen md:p-4">
-        <div className="flex-1 flex flex-col bg-white/60 md:rounded-3xl backdrop-blur-sm overflow-hidden">
+      <main className="flex-1 flex flex-col h-full md:p-5 md:pl-4 overflow-hidden">
+        <div 
+          className="flex-1 flex flex-col h-full md:rounded-[24px] overflow-hidden relative"
+          style={{
+            background: "linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%)",
+            backdropFilter: "blur(20px)"
+          }}
+        >
           {/* Mobile Header */}
-          <header className="flex items-center justify-between px-4 py-3 md:hidden border-b border-gray-100">
+          <header className="flex items-center justify-between px-4 py-3 md:hidden border-b border-gray-100/50">
             <button onClick={() => setSidebarOpen(true)} className="text-gray-600">
               <Menu className="w-6 h-6" />
             </button>
-            <span className="font-semibold text-gray-800">CHAT A.I+</span>
+            <span className="font-bold text-[#1a1a1a]">CHAT A.I+</span>
             <div className="w-6" />
           </header>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
-            <div className="max-w-4xl mx-auto space-y-6">
-              {currentConversation?.messages.map((msg) => (
-                <div key={msg.id} className="space-y-4">
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-[900px] mx-auto px-6 md:px-10 py-8">
+              {messages.map((msg) => (
+                <div key={msg.id} className="mb-6">
                   {msg.role === "user" ? (
                     // User Message
                     <div className="flex items-start gap-4">
-                      <div className="w-9 h-9 rounded-full overflow-hidden bg-amber-100 shrink-0 flex items-center justify-center">
-                        <Smile className="w-5 h-5 text-amber-600" />
+                      <div className="w-[36px] h-[36px] rounded-full bg-[#FEF3C7] shrink-0 flex items-center justify-center">
+                        <Smile className="w-[20px] h-[20px] text-[#F59E0B]" />
                       </div>
-                      <div className="flex-1 pt-1">
-                        <p className="text-gray-800 text-[15px] leading-relaxed">{msg.content}</p>
+                      <div className="flex-1 pt-2">
+                        <p className="text-[#374151] text-[15px] leading-[1.7]">{msg.content}</p>
                       </div>
-                      <button className="text-gray-300 hover:text-gray-500 mt-1">
-                        <Edit3 className="w-4 h-4" />
+                      <button className="text-[#D1D5DB] hover:text-[#9CA3AF] mt-2">
+                        <Edit3 className="w-[16px] h-[16px]" />
                       </button>
                     </div>
                   ) : (
                     // Assistant Message
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[#5B7BF9] font-semibold text-sm">CHAT A.I +</span>
-                        <Check className="w-3.5 h-3.5 text-[#5B7BF9]" />
+                    <div className="mt-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-[#5B7BF9] font-semibold text-[13px] tracking-wide">CHAT A.I +</span>
+                        <Check className="w-[14px] h-[14px] text-[#5B7BF9]" />
                       </div>
-                      <div className="text-gray-700 text-[15px] leading-relaxed whitespace-pre-wrap">
-                        {msg.content.split('\n').map((line, i) => {
-                          if (line.startsWith('**') && line.endsWith('**')) {
-                            return <strong key={i} className="font-semibold text-gray-900">{line.slice(2, -2)}</strong>;
-                          }
-                          if (line.match(/^\d+\.\s\*\*/)) {
-                            const match = line.match(/^(\d+\.)\s\*\*(.+?)\*\*(.*)$/);
-                            if (match) {
-                              return (
-                                <p key={i} className="mt-3">
-                                  <span>{match[1]} </span>
-                                  <strong className="font-semibold text-gray-900">{match[2]}</strong>
-                                  <span>{match[3]}</span>
-                                </p>
-                              );
-                            }
-                          }
-                          return <p key={i} className={line ? "" : "h-3"}>{line}</p>;
-                        })}
+                      <div className="text-[#4B5563] text-[15px] leading-[1.75]">
+                        {renderContent(msg.content)}
                       </div>
                       
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-1 pt-2">
-                        <button className="p-1.5 text-gray-300 hover:text-gray-500 hover:bg-gray-100 rounded transition-colors">
-                          <ThumbsUp className="w-4 h-4" />
+                      <div className="flex items-center gap-0 mt-4">
+                        <button className="p-2 text-[#D1D5DB] hover:text-[#9CA3AF] transition-colors">
+                          <ThumbsUp className="w-[16px] h-[16px]" />
                         </button>
-                        <span className="text-gray-200">|</span>
-                        <button className="p-1.5 text-gray-300 hover:text-gray-500 hover:bg-gray-100 rounded transition-colors">
-                          <ThumbsDown className="w-4 h-4" />
+                        <span className="text-[#E5E7EB] mx-1">|</span>
+                        <button className="p-2 text-[#D1D5DB] hover:text-[#9CA3AF] transition-colors">
+                          <ThumbsDown className="w-[16px] h-[16px]" />
                         </button>
-                        <span className="text-gray-200">|</span>
-                        <button className="p-1.5 text-gray-300 hover:text-gray-500 hover:bg-gray-100 rounded transition-colors">
-                          <Copy className="w-4 h-4" />
+                        <span className="text-[#E5E7EB] mx-1">|</span>
+                        <button className="p-2 text-[#D1D5DB] hover:text-[#9CA3AF] transition-colors">
+                          <Copy className="w-[16px] h-[16px]" />
                         </button>
-                        <span className="text-gray-200">|</span>
-                        <button className="p-1.5 text-gray-300 hover:text-gray-500 hover:bg-gray-100 rounded transition-colors">
-                          <MoreHorizontal className="w-4 h-4" />
+                        <span className="text-[#E5E7EB] mx-1">|</span>
+                        <button className="p-2 text-[#D1D5DB] hover:text-[#9CA3AF] transition-colors">
+                          <MoreVertical className="w-[16px] h-[16px]" />
                         </button>
                         
                         <div className="flex-1" />
                         
-                        <button className="flex items-center gap-1.5 px-3 py-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm">
-                          <RotateCcw className="w-3.5 h-3.5" />
-                          Regenerate
+                        <button className="flex items-center gap-2 px-4 py-2 text-[#9CA3AF] hover:text-[#6B7280] hover:bg-white/50 rounded-[10px] transition-all text-[13px]">
+                          <RotateCcw className="w-[14px] h-[14px]" />
+                          <span>Regenerate</span>
                         </button>
                       </div>
                     </div>
@@ -351,15 +339,15 @@ export default function ChatPage() {
 
               {/* Loading */}
               {isLoading && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#5B7BF9] font-semibold text-sm">CHAT A.I +</span>
-                    <Check className="w-3.5 h-3.5 text-[#5B7BF9]" />
+                <div className="mt-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[#5B7BF9] font-semibold text-[13px] tracking-wide">CHAT A.I +</span>
+                    <Check className="w-[14px] h-[14px] text-[#5B7BF9]" />
                   </div>
                   <div className="flex gap-1.5">
-                    <span className="w-2 h-2 bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-2 h-2 bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-2 h-2 bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span className="w-[8px] h-[8px] bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-[8px] h-[8px] bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-[8px] h-[8px] bg-[#5B7BF9] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 </div>
               )}
@@ -369,29 +357,35 @@ export default function ChatPage() {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 md:px-8 md:pb-6">
-            <div className="max-w-4xl mx-auto">
-              <div className="relative flex items-center bg-white rounded-full shadow-lg border border-gray-100 pl-5 pr-2 py-2">
-                <button className="text-gray-400 hover:text-gray-600 mr-3">
-                  <Smile className="w-5 h-5" />
+          <div className="p-4 md:px-10 md:pb-8">
+            <div className="max-w-[900px] mx-auto relative">
+              <div 
+                className="flex items-center bg-white rounded-full pl-5 pr-2 py-2 h-[52px]"
+                style={{ 
+                  boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.06)",
+                  border: "1px solid rgba(0,0,0,0.04)"
+                }}
+              >
+                <button className="text-[#F59E0B] mr-3">
+                  <Smile className="w-[22px] h-[22px]" />
                 </button>
                 <input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="What's in your mind?..."
-                  className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 outline-none text-[15px]"
+                  className="flex-1 bg-transparent text-[#374151] placeholder-[#9CA3AF] outline-none text-[15px]"
                 />
                 <button
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isLoading}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                  className={`w-[40px] h-[40px] rounded-full flex items-center justify-center transition-all ${
                     inputValue.trim() && !isLoading
                       ? "bg-[#5B7BF9] hover:bg-[#4A6AE8] text-white"
-                      : "bg-gray-100 text-gray-400"
+                      : "bg-[#F3F4F6] text-[#D1D5DB]"
                   }`}
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-[16px] h-[16px]" />
                 </button>
               </div>
             </div>
@@ -399,14 +393,18 @@ export default function ChatPage() {
         </div>
       </main>
 
-      {/* Upgrade to Pro Button (Right Side) */}
+      {/* Upgrade to Pro Button */}
       <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-30">
         <button 
-          className="bg-[#7C5CFC] hover:bg-[#6B4AEB] text-white px-3 py-6 rounded-l-xl shadow-lg flex flex-col items-center gap-2 transition-colors"
-          style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
+          className="flex flex-col items-center gap-2 bg-[#7C5CFC] hover:bg-[#6B4AEB] text-white pl-2 pr-3 py-5 rounded-l-[16px] transition-colors"
+          style={{ 
+            boxShadow: "0px 4px 20px rgba(124, 92, 252, 0.3)",
+            writingMode: "vertical-rl",
+            textOrientation: "mixed"
+          }}
         >
-          <Star className="w-4 h-4 text-yellow-300 fill-yellow-300" />
-          <span className="text-xs font-medium tracking-wider">Upgrade to Pro</span>
+          <Star className="w-[16px] h-[16px] text-[#FBBF24] fill-[#FBBF24] rotate-90" />
+          <span className="text-[12px] font-medium tracking-wide">Upgrade to Pro</span>
         </button>
       </div>
     </div>

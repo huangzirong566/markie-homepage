@@ -13,7 +13,7 @@ import Navbar from "@/components/Navbar";
 
 function AppRouter() {
   const [location] = useLocation();
-  const hideNavbar = location === "/chat"; // Chat 页面有自己的布局
+  const hideNavbar = location === "/chat" || location === "/tools"; // 这些页面有自己的布局
 
   return (
     <>

@@ -1,46 +1,42 @@
-import { useState, useEffect, useMemo } from "react";
-import { toast } from "sonner";
-import { Sun, Cloud, CloudRain, Snowflake, Wind, RefreshCw, MapPin, Thermometer, CloudSun, TrendingUp } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Sun, Cloud, CloudRain, Snowflake, RefreshCw, MapPin, Thermometer, CloudSun, TrendingUp } from "lucide-react";
 
 interface CityWeather {
-  name: string; lat: number; lng: number; weather: string; temp: string; nightTemp: string; wind: string; isSunny: boolean;
+  name: string; lat: number; lng: number; weather: string; temp: string; isSunny: boolean;
 }
 
-const MOCK_DATA = {
-  success: true, timestamp: new Date().toISOString(), totalCities: 38, sunnyCities: 21,
-  cities: [
-    { name: "北京", lat: 39.9, lng: 116.4, weather: "晴", temp: "2", nightTemp: "-11", wind: "东北", isSunny: true },
-    { name: "上海", lat: 31.2, lng: 121.5, weather: "晴", temp: "9", nightTemp: "1", wind: "东南", isSunny: true },
-    { name: "天津", lat: 39.1, lng: 117.2, weather: "晴", temp: "3", nightTemp: "-8", wind: "北", isSunny: true },
-    { name: "广州", lat: 23.1, lng: 113.3, weather: "多云", temp: "16", nightTemp: "6", wind: "北", isSunny: false },
-    { name: "深圳", lat: 22.5, lng: 114.1, weather: "多云", temp: "17", nightTemp: "9", wind: "北", isSunny: false },
-    { name: "杭州", lat: 30.3, lng: 120.2, weather: "晴", temp: "10", nightTemp: "2", wind: "北", isSunny: true },
-    { name: "南京", lat: 32.1, lng: 118.8, weather: "晴", temp: "8", nightTemp: "0", wind: "东北", isSunny: true },
-    { name: "成都", lat: 30.7, lng: 104.1, weather: "阴", temp: "11", nightTemp: "5", wind: "东北", isSunny: false },
-    { name: "武汉", lat: 30.6, lng: 114.3, weather: "多云", temp: "9", nightTemp: "2", wind: "北", isSunny: false },
-    { name: "西安", lat: 34.3, lng: 108.9, weather: "多云", temp: "5", nightTemp: "-4", wind: "东北", isSunny: false },
-    { name: "昆明", lat: 25.0, lng: 102.7, weather: "晴", temp: "16", nightTemp: "2", wind: "西南", isSunny: true },
-    { name: "三亚", lat: 18.3, lng: 109.5, weather: "多云", temp: "25", nightTemp: "19", wind: "东北", isSunny: false },
-    { name: "哈尔滨", lat: 45.8, lng: 126.6, weather: "多云", temp: "-15", nightTemp: "-26", wind: "西南", isSunny: false },
-    { name: "沈阳", lat: 41.8, lng: 123.4, weather: "晴", temp: "-8", nightTemp: "-20", wind: "西北", isSunny: true },
-    { name: "大连", lat: 38.9, lng: 121.6, weather: "晴", temp: "-1", nightTemp: "-8", wind: "北", isSunny: true },
-    { name: "青岛", lat: 36.1, lng: 120.4, weather: "晴", temp: "3", nightTemp: "-3", wind: "西北", isSunny: true },
-    { name: "济南", lat: 36.7, lng: 117.0, weather: "晴", temp: "4", nightTemp: "-5", wind: "北", isSunny: true },
-    { name: "郑州", lat: 34.8, lng: 113.7, weather: "多云", temp: "6", nightTemp: "-2", wind: "东北", isSunny: false },
-    { name: "长沙", lat: 28.2, lng: 112.9, weather: "阴", temp: "8", nightTemp: "3", wind: "北", isSunny: false },
-    { name: "南昌", lat: 28.7, lng: 115.9, weather: "晴", temp: "11", nightTemp: "3", wind: "北", isSunny: true },
-    { name: "福州", lat: 26.1, lng: 119.3, weather: "多云", temp: "14", nightTemp: "8", wind: "东北", isSunny: false },
-    { name: "海口", lat: 20.0, lng: 110.3, weather: "多云", temp: "20", nightTemp: "14", wind: "东北", isSunny: false },
-    { name: "贵阳", lat: 26.6, lng: 106.7, weather: "阴", temp: "6", nightTemp: "2", wind: "东", isSunny: false },
-    { name: "拉萨", lat: 29.6, lng: 91.1, weather: "晴", temp: "8", nightTemp: "-8", wind: "西南", isSunny: true },
-    { name: "兰州", lat: 36.1, lng: 103.8, weather: "晴", temp: "2", nightTemp: "-10", wind: "东", isSunny: true },
-    { name: "银川", lat: 38.5, lng: 106.3, weather: "晴", temp: "-1", nightTemp: "-13", wind: "东北", isSunny: true },
-    { name: "西宁", lat: 36.6, lng: 101.8, weather: "晴", temp: "0", nightTemp: "-14", wind: "东南", isSunny: true },
-    { name: "乌鲁木齐", lat: 43.8, lng: 87.6, weather: "小雪", temp: "-10", nightTemp: "-17", wind: "西北", isSunny: false },
-    { name: "大理", lat: 25.6, lng: 100.2, weather: "晴", temp: "15", nightTemp: "1", wind: "西南", isSunny: true },
-    { name: "丽江", lat: 26.9, lng: 100.2, weather: "晴", temp: "14", nightTemp: "-2", wind: "西南", isSunny: true },
-  ],
-};
+const CITIES: CityWeather[] = [
+  { name: "北京", lat: 39.9, lng: 116.4, weather: "晴", temp: "2", isSunny: true },
+  { name: "上海", lat: 31.2, lng: 121.5, weather: "晴", temp: "9", isSunny: true },
+  { name: "天津", lat: 39.1, lng: 117.2, weather: "晴", temp: "3", isSunny: true },
+  { name: "广州", lat: 23.1, lng: 113.3, weather: "多云", temp: "16", isSunny: false },
+  { name: "深圳", lat: 22.5, lng: 114.1, weather: "多云", temp: "17", isSunny: false },
+  { name: "杭州", lat: 30.3, lng: 120.2, weather: "晴", temp: "10", isSunny: true },
+  { name: "南京", lat: 32.1, lng: 118.8, weather: "晴", temp: "8", isSunny: true },
+  { name: "成都", lat: 30.7, lng: 104.1, weather: "阴", temp: "11", isSunny: false },
+  { name: "武汉", lat: 30.6, lng: 114.3, weather: "多云", temp: "9", isSunny: false },
+  { name: "西安", lat: 34.3, lng: 108.9, weather: "多云", temp: "5", isSunny: false },
+  { name: "昆明", lat: 25.0, lng: 102.7, weather: "晴", temp: "16", isSunny: true },
+  { name: "三亚", lat: 18.3, lng: 109.5, weather: "多云", temp: "25", isSunny: false },
+  { name: "哈尔滨", lat: 45.8, lng: 126.6, weather: "多云", temp: "-15", isSunny: false },
+  { name: "沈阳", lat: 41.8, lng: 123.4, weather: "晴", temp: "-8", isSunny: true },
+  { name: "大连", lat: 38.9, lng: 121.6, weather: "晴", temp: "-1", isSunny: true },
+  { name: "青岛", lat: 36.1, lng: 120.4, weather: "晴", temp: "3", isSunny: true },
+  { name: "济南", lat: 36.7, lng: 117.0, weather: "晴", temp: "4", isSunny: true },
+  { name: "郑州", lat: 34.8, lng: 113.7, weather: "多云", temp: "6", isSunny: false },
+  { name: "长沙", lat: 28.2, lng: 112.9, weather: "阴", temp: "8", isSunny: false },
+  { name: "南昌", lat: 28.7, lng: 115.9, weather: "晴", temp: "11", isSunny: true },
+  { name: "福州", lat: 26.1, lng: 119.3, weather: "多云", temp: "14", isSunny: false },
+  { name: "海口", lat: 20.0, lng: 110.3, weather: "多云", temp: "20", isSunny: false },
+  { name: "贵阳", lat: 26.6, lng: 106.7, weather: "阴", temp: "6", isSunny: false },
+  { name: "拉萨", lat: 29.6, lng: 91.1, weather: "晴", temp: "8", isSunny: true },
+  { name: "兰州", lat: 36.1, lng: 103.8, weather: "晴", temp: "2", isSunny: true },
+  { name: "银川", lat: 38.5, lng: 106.3, weather: "晴", temp: "-1", isSunny: true },
+  { name: "西宁", lat: 36.6, lng: 101.8, weather: "晴", temp: "0", isSunny: true },
+  { name: "乌鲁木齐", lat: 43.8, lng: 87.6, weather: "小雪", temp: "-10", isSunny: false },
+  { name: "大理", lat: 25.6, lng: 100.2, weather: "晴", temp: "15", isSunny: true },
+  { name: "丽江", lat: 26.9, lng: 100.2, weather: "晴", temp: "14", isSunny: true },
+];
 
 function getWeatherIcon(weather: string, size = "w-5 h-5") {
   if (weather === "晴") return <Sun className={`${size} text-amber-400`} />;
@@ -55,29 +51,20 @@ function projectToMap(lat: number, lng: number, w: number, h: number) {
 }
 
 export default function SunnyMapPage() {
-  const [data, setData] = useState(MOCK_DATA);
-  const [loading, setLoading] = useState(false);
   const [hovered, setHovered] = useState<CityWeather | null>(null);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/weather");
-      if (res.ok) { const r = await res.json(); if (r.success) { setData(r); toast.success("已更新"); } }
-    } catch {}
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchData(); }, []);
+  const [loading, setLoading] = useState(false);
+  const cities = CITIES;
 
   const stats = useMemo(() => {
-    const sunny = data.cities.filter(c => c.isSunny).length;
-    const temps = data.cities.map(c => parseInt(c.temp));
-    return { sunny, total: data.cities.length, avg: Math.round(temps.reduce((a, b) => a + b, 0) / temps.length), max: Math.max(...temps), min: Math.min(...temps) };
-  }, [data]);
+    const sunny = cities.filter(c => c.isSunny).length;
+    const temps = cities.map(c => parseInt(c.temp));
+    return { sunny, total: cities.length, avg: Math.round(temps.reduce((a, b) => a + b, 0) / temps.length), max: Math.max(...temps), min: Math.min(...temps) };
+  }, [cities]);
 
-  const topHot = useMemo(() => [...data.cities].sort((a, b) => parseInt(b.temp) - parseInt(a.temp)).slice(0, 6), [data]);
-  const topCold = useMemo(() => [...data.cities].sort((a, b) => parseInt(a.temp) - parseInt(b.temp)).slice(0, 6), [data]);
+  const topHot = useMemo(() => [...cities].sort((a, b) => parseInt(b.temp) - parseInt(a.temp)).slice(0, 6), [cities]);
+  const topCold = useMemo(() => [...cities].sort((a, b) => parseInt(a.temp) - parseInt(b.temp)).slice(0, 6), [cities]);
+  const sunnyCities = useMemo(() => cities.filter(c => c.isSunny), [cities]);
+
   const mapW = 420, mapH = 320;
 
   return (
@@ -89,7 +76,7 @@ export default function SunnyMapPage() {
             <h1 className="text-2xl font-bold">晴天地图</h1>
             <span className="text-xs text-slate-500 ml-2">实时天气数据看板</span>
           </div>
-          <button onClick={fetchData} disabled={loading} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-slate-300">
+          <button onClick={() => setLoading(true)} disabled={loading} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-slate-300">
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} /> 刷新
           </button>
         </div>
@@ -115,7 +102,7 @@ export default function SunnyMapPage() {
           </div>
           <div className="col-span-6 md:col-span-3 bg-white/5 rounded-2xl p-5 border border-white/10">
             <div className="flex items-start justify-between">
-              <div><p className="text-xs text-slate-400 mb-1">更新时间</p><p className="text-lg font-medium text-white">{new Date(data.timestamp).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}</p><p className="text-xs text-slate-500 mt-1">{new Date(data.timestamp).toLocaleDateString("zh-CN")}</p></div>
+              <div><p className="text-xs text-slate-400 mb-1">更新时间</p><p className="text-lg font-medium text-white">{new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}</p><p className="text-xs text-slate-500 mt-1">{new Date().toLocaleDateString("zh-CN")}</p></div>
               <div className="p-2 rounded-xl bg-emerald-500/20"><TrendingUp className="w-6 h-6 text-emerald-400" /></div>
             </div>
           </div>
@@ -127,7 +114,7 @@ export default function SunnyMapPage() {
                 <defs><radialGradient id="glow"><stop offset="0%" stopColor="#fbbf24" stopOpacity="0.6" /><stop offset="100%" stopColor="#fbbf24" stopOpacity="0" /></radialGradient></defs>
                 <rect width="100%" height="100%" fill="rgba(255,255,255,0.02)" />
                 <path d="M 65 44 Q 108 34 173 49 Q 244 38 314 65 Q 369 55 391 87 Q 401 120 391 151 Q 380 184 352 206 Q 325 227 282 250 Q 244 270 206 280 Q 163 275 120 260 Q 87 239 55 206 Q 33 173 43 130 Q 50 87 65 44 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                {data.cities.map((city) => {
+                {cities.map((city) => {
                   const pos = projectToMap(city.lat, city.lng, mapW, mapH);
                   const isH = hovered?.name === city.name;
                   return (
@@ -161,7 +148,7 @@ export default function SunnyMapPage() {
           <div className="col-span-12 bg-white/5 rounded-2xl p-5 border border-white/10">
             <p className="text-xs text-slate-400 mb-4">晴天城市一览</p>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-              {data.cities.filter(c => c.isSunny).map((city) => (
+              {sunnyCities.map((city) => (
                 <div key={city.name} className="bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-xl p-3 border border-amber-500/20 hover:border-amber-500/40 transition-all">
                   <div className="flex items-center gap-2 mb-1"><Sun className="w-4 h-4 text-amber-400" /><span className="font-medium text-white text-sm truncate">{city.name}</span></div>
                   <div className="text-xs text-slate-400">{city.temp}°C</div>

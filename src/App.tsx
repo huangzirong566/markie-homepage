@@ -7,7 +7,7 @@ import Portfolio from "@/pages/Portfolio";
 import Matrix from "@/pages/Matrix";
 import ContactPage from "@/pages/ContactPage";
 import ChatPage from "@/pages/ChatPage";
-import ToolsPage from "@/pages/ToolsPage";
+import TextConverter from "@/pages/TextConverter";
 import SunnyMapPage from "@/pages/SunnyMapPage";
 import Navbar from "@/components/Navbar";
 
@@ -24,7 +24,7 @@ function AppRouter() {
         <Route path="/matrix" component={Matrix} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/chat" component={ChatPage} />
-        <Route path="/tools" component={ToolsPage} />
+        <Route path="/tools" component={TextConverter} />
         <Route path="/sunny-map" component={SunnyMapPage} />
       </Switch>
     </>

@@ -6,28 +6,56 @@ import iconXiaohongshu from "@/assets/icon-xiaohongshu.svg";
 import iconWechat from "@/assets/icon-wechat.svg";
 import iconImastudio from "@/assets/icon-imastudio.png";
 
+const history = [
+  {
+    year: "2025.10 — Present",
+    role: "产品实习生 (AI Video)",
+    company: "乐我无限",
+    desc: "负责 imastudio 平台增长，优化视频生成体验，搭建 Agent 工作流。"
+  },
+  {
+    year: "2025.04 — 2025.09",
+    role: "产品实习生 (AI Anime)",
+    company: "网易互娱",
+    desc: "产出 50+ AI 漫剧，搭建 ComfyUI 工作流与智能分镜 Agent。"
+  },
+  {
+    year: "2025.09",
+    role: "一等奖",
+    company: "WaytoAGI 黑客松",
+    desc: "开发视频转总结工具，解决信息过载问题。"
+  }
+];
+
 export default function About() {
   return (
     <section 
       id="about" 
       className="py-24 px-6 md:px-24 w-full bg-black"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col lg:flex-row gap-8 lg:gap-12"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"
         >
-          {/* Left Column */}
-          <div className="flex-1 space-y-6">
+          {/* Left Column - Profile */}
+          <div className="space-y-6">
             
-            {/* Name */}
-            <h3 className="text-3xl font-bold text-white">
-              Mark-黄子榕
-            </h3>
+            {/* Header: Name + Avatar */}
+            <div className="flex items-start justify-between">
+              <h3 className="text-3xl font-bold text-white">
+                Mark-黄子榕
+              </h3>
+              <img 
+                src={avatarImg} 
+                alt="头像" 
+                className="w-28 h-28 rounded-full object-cover shadow-xl"
+              />
+            </div>
             
             {/* Divider */}
             <div className="w-full border-b border-white/20" />
@@ -98,17 +126,7 @@ export default function About() {
                 <img src={iconImastudio} alt="Ima Studio" className="w-8 h-8 rounded-lg" />
               </a>
             </div>
-          </div>
 
-          {/* Right Column */}
-          <div className="flex flex-col items-center lg:items-end gap-6">
-            {/* Avatar */}
-            <img 
-              src={avatarImg} 
-              alt="头像" 
-              className="w-40 h-40 rounded-full object-cover shadow-xl"
-            />
-            
             {/* Contact Button */}
             <a 
               href="#/contact"
@@ -117,6 +135,27 @@ export default function About() {
               <Mail className="w-5 h-5" />
               联系我
             </a>
+          </div>
+
+          {/* Right Column - Work Experience */}
+          <div>
+            <h2 className="text-3xl font-display font-bold text-white mb-12">工作经历</h2>
+            
+            <div className="space-y-10">
+              {history.map((item, i) => (
+                <div key={i} className="group">
+                  <div className="flex items-center gap-4 text-xs font-bold text-white/30 uppercase tracking-widest mb-3">
+                    <span>{item.year}</span>
+                    <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-white/30 transition-colors" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-white/80 transition-colors">{item.role}</h3>
+                  <div className="text-sm text-white/50 mb-3">{item.company}</div>
+                  <p className="text-white/60 font-light text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
         </motion.div>

@@ -116,7 +116,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Avatar (desktop) - 圆角头像形式 */}
+        {/* Avatar (desktop) - 圆形头像 */}
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -124,11 +124,11 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="w-full lg:w-2/5 hidden lg:flex items-center justify-center"
         >
-          <div className="w-64 h-64 rounded-2xl shadow-2xl overflow-hidden border-4 border-gray-800">
+          <div className="w-48 h-48 rounded-full shadow-2xl overflow-hidden border-4 border-gray-700">
             <img 
               src={avatarImg} 
               alt="头像" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top scale-150"
             />
           </div>
         </motion.div>

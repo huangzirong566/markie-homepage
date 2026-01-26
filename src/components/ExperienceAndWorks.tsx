@@ -63,9 +63,6 @@ export default function ExperienceAndWorks() {
         <div>
            <div className="flex items-center justify-between mb-12">
              <h2 className="text-3xl font-display font-bold text-white">工作经历</h2>
-             <a href="/resume.pdf" download className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors border-b border-white/20 pb-0.5">
-               <Download className="w-4 h-4" /> 简历 PDF
-             </a>
            </div>
            
            <div className="space-y-12">

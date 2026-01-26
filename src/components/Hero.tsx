@@ -25,7 +25,7 @@ export default function Hero() {
           className="md:pl-12"
         >
           <h2 className="text-base md:text-lg font-sans tracking-[0.4em] text-white/70 mb-8 uppercase border-l-4 border-white pl-6">
-            Product Manager & Creator
+            AI产品经理 & 自媒体博主
           </h2>
           <h1 className="text-7xl md:text-[9rem] font-bold leading-[1] text-white mb-10 font-display tracking-tight">
             黄子榕 <br/>

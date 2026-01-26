@@ -1,92 +1,138 @@
 import { motion } from "framer-motion";
-import avatarImg from "@/assets/avatar.jpeg";
-import { Github, Mail } from "lucide-react";
+import avatarImg from "@/assets/avatar-coffee.png";
+import { Github, Mail, Briefcase, MapPin } from "lucide-react";
 import iconBilibili from "@/assets/icon-bilibili.svg";
-import iconDouyin from "@/assets/icon-douyin.svg";
 import iconXiaohongshu from "@/assets/icon-xiaohongshu.svg";
 import iconWechat from "@/assets/icon-wechat.svg";
-import TagCloud from "@/components/TagCloud";
+import iconImastudio from "@/assets/icon-imastudio.png";
 
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 md:px-24 w-full max-w-[1400px] mx-auto border-t border-white/5">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
+    <section 
+      id="about" 
+      className="py-24 px-6 md:px-24 w-full bg-black"
+    >
+      <div className="max-w-4xl mx-auto flex items-center flex-wrap">
         
-        {/* Left Column: Profile Card (Arlo Style) */}
-        <div className="md:col-span-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            {/* Round Avatar */}
-            <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-white/10 shadow-xl">
-              <img src={avatarImg} alt="Mark" className="w-full h-full object-cover" />
-            </div>
+        {/* Main Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl mx-6 lg:mx-0 relative bg-gray-900 opacity-95"
+        >
+          <div className="p-6 md:p-12 text-center lg:text-left">
             
+            {/* Avatar (mobile) */}
+            <div 
+              className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center border-4 border-gray-800"
+              style={{ backgroundImage: `url(${avatarImg})` }}
+            />
+
             {/* Name */}
-            <h3 className="text-4xl font-bold text-white">Mark</h3>
+            <h3 className="text-3xl font-bold pt-8 lg:pt-0 text-white">
+              Mark-黄子榕
+            </h3>
             
-            {/* Subtitle - Highlighted */}
-            <p className="text-xl text-blue-400 font-medium">
+            {/* Divider */}
+            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-purple-500 opacity-25" />
+
+            {/* Job Title */}
+            <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start text-white">
+              <Briefcase className="w-4 h-4 mr-3 text-purple-500" />
               AI 产品实习生 / 独立创作者
             </p>
-            
-            {/* Description */}
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                专注于 AI 产品的设计与开发，热衷于将 AI 能力转化为解决实际问题的产品。
-              </p>
-              <p>
-                20岁，擅长从 0 到 1 打造产品，从需求洞察、产品设计到技术实现全流程把控。相信好的 AI 产品应该让复杂的技术变得简单易用。
-              </p>
-            </div>
-            
-            {/* Social Icons */}
-            <div className="flex items-center gap-4 pt-2">
-              <a href="https://github.com/huangzirong566" target="_blank" className="text-white/40 hover:text-white transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="https://space.bilibili.com/" target="_blank" className="opacity-40 hover:opacity-100 transition-opacity">
-                <img src={iconBilibili} alt="Bilibili" className="w-5 h-5" />
-              </a>
-              <a href="https://www.douyin.com/user/self" target="_blank" className="opacity-40 hover:opacity-100 transition-opacity">
-                <img src={iconDouyin} alt="Douyin" className="w-5 h-5" />
-              </a>
-              <a href="https://www.xiaohongshu.com/user/profile/60f8378f0000000001002283" target="_blank" className="opacity-40 hover:opacity-100 transition-opacity">
-                <img src={iconXiaohongshu} alt="小红书" className="w-5 h-5" />
-              </a>
-              <a href="#/contact" className="opacity-40 hover:opacity-100 transition-opacity">
-                <img src={iconWechat} alt="微信" className="w-5 h-5" />
-              </a>
-            </div>
-            
-            {/* Contact Button */}
-            <a 
-              href="#/contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg transition-colors mt-2"
-            >
-              <Mail className="w-4 h-4" />
-              联系我
-            </a>
-          </motion.div>
-        </div>
 
-        {/* Right Column: Tag Cloud */}
-        <div className="md:col-span-8 space-y-12">
-          {/* Interests & Skills (3D Tag Cloud) */}
-          <div className="relative flex flex-col mb-16">
-             <div className="flex items-center justify-between mb-4">
-               <span className="text-xs font-bold text-white/40 uppercase tracking-widest">标签云</span>
-               <div className="text-[10px] text-white/20 uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">3D View</div>
-             </div>
-             <div className="w-full h-[280px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-inner relative group">
-               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-               <TagCloud />
-             </div>
+            {/* Location */}
+            <p className="pt-2 text-xs lg:text-sm flex items-center justify-center lg:justify-start text-gray-400">
+              <MapPin className="w-4 h-4 mr-3 text-purple-500" />
+              中国 · 北京
+            </p>
+
+            {/* Description */}
+            <p className="pt-8 text-sm text-gray-400">
+              专注于 AI 产品的设计与开发，正在搭建一款AI创作平台，副业在做自媒体。
+            </p>
+
+            {/* Contact Button */}
+            <div className="pt-12 pb-8">
+              <a 
+                href="#/contact"
+                className="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 inline-flex items-center gap-2"
+              >
+                <Mail className="w-4 h-4" />
+                联系我
+              </a>
+            </div>
+
+            {/* Social Links - 微信、小红书、B站、GitHub、Imastudio */}
+            <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex items-center justify-start gap-8">
+              <a 
+                href="#/contact" 
+                className="text-gray-400 hover:text-green-400 transition-all duration-300 hover:-translate-y-0.5"
+                title="微信"
+              >
+                <img src={iconWechat} alt="微信" className="w-7 h-7" />
+              </a>
+              
+              <a 
+                href="https://www.xiaohongshu.com/user/profile/60f8378f0000000001002283" 
+                target="_blank" 
+                className="text-gray-400 hover:text-red-400 transition-all duration-300 hover:-translate-y-0.5"
+                title="小红书"
+              >
+                <img src={iconXiaohongshu} alt="小红书" className="w-7 h-7" />
+              </a>
+              
+              <a 
+                href="https://space.bilibili.com/" 
+                target="_blank" 
+                className="text-gray-400 hover:text-pink-400 transition-all duration-300 hover:-translate-y-0.5"
+                title="哔哩哔哩"
+              >
+                <img src={iconBilibili} alt="哔哩哔哩" className="w-7 h-7" />
+              </a>
+              
+              <a 
+                href="https://github.com/huangzirong566" 
+                target="_blank" 
+                className="text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+                title="GitHub"
+              >
+                <Github className="w-7 h-7" />
+              </a>
+              
+              <a 
+                href="https://www.imastudio.com/community" 
+                target="_blank" 
+                className="transition-all duration-300 hover:-translate-y-0.5"
+                title="Ima Studio"
+              >
+                <img src={iconImastudio} alt="Ima Studio" className="w-7 h-7 rounded-lg" />
+              </a>
+            </div>
+
           </div>
-        </div>
+        </motion.div>
+
+        {/* Avatar (desktop) - 圆角头像形式 */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full lg:w-2/5 hidden lg:flex items-center justify-center"
+        >
+          <div className="w-64 h-64 rounded-2xl shadow-2xl overflow-hidden border-4 border-gray-800">
+            <img 
+              src={avatarImg} 
+              alt="头像" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

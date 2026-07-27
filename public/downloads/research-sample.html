@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mark Huang — China Research Workflow Sample</title>
+  <style>
+    :root{--ink:#151515;--paper:#f3f0e9;--acid:#d9ff43;--line:rgba(21,21,21,.18);--muted:#69675f}
+    *{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.6 Arial,sans-serif}
+    main{width:min(1080px,calc(100% - 32px));margin:auto;padding:64px 0 100px}
+    h1{max-width:800px;margin:12px 0 24px;font-size:clamp(42px,8vw,88px);line-height:.94;letter-spacing:-.07em}
+    h2{margin-top:64px;font-size:28px;letter-spacing:-.04em}.kicker,.label{font:12px monospace;letter-spacing:.08em;text-transform:uppercase}
+    .boundary{padding:18px;background:var(--acid)}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:24px;background:var(--line);border:1px solid var(--line)}
+    .flow div{min-height:150px;padding:18px;background:var(--paper)}.flow b{display:block;margin:28px 0 8px;font-size:18px}
+    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:#ffffff73}th,td{padding:12px;border:1px solid var(--line);text-align:left;vertical-align:top}
+    th{font:11px monospace;text-transform:uppercase}.status{display:inline-block;padding:3px 7px;background:var(--acid);font:10px monospace}
+    .unknown{display:inline-block;padding:3px 7px;border:1px solid var(--line);font:10px monospace}.note{color:var(--muted)}ul{padding-left:18px}
+    @media(max-width:750px){.flow{grid-template-columns:1fr 1fr}table{min-width:840px}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="kicker">Sanitized workflow sample · July 2026</div>
+  <h1>China supplier research that stays inspectable.</h1>
+  <p class="boundary"><strong>Proof boundary:</strong> This page demonstrates a schema and QA method using fictional names. It is not a commercial recommendation. Capability, pricing, compliance and ownership require direct buyer verification.</p>
+
+  <h2>The workflow</h2>
+  <div class="flow">
+    <div><span class="label">01</span><b>Define the decision</b><span class="note">Product, geography, minimum evidence, fields and exclusions.</span></div>
+    <div><span class="label">02</span><b>Collect sources</b><span class="note">Official sites, business profiles, catalogs and check dates.</span></div>
+    <div><span class="label">03</span><b>Separate fact from fit</b><span class="note">Published capability stays separate from fit assessment.</span></div>
+    <div><span class="label">04</span><b>QA and handoff</b><span class="note">Duplicates, missing fields and follow-up questions remain visible.</span></div>
+  </div>
+
+  <h2>Sanitized sample rows</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Supplier</th><th>Region</th><th>Published capability</th><th>MOQ</th><th>Evidence</th><th>Confidence</th><th>Buyer follow-up</th></tr>
+    <tr><td>Example Labs A</td><td>Guangdong</td><td>Fragrance filling; carton assembly</td><td><span class="unknown">Unknown</span></td><td>Official capability page; checked 2026-07</td><td><span class="status">Source checked</span></td><td>Confirm formulation ownership and export documents.</td></tr>
+    <tr><td>Example Packaging B</td><td>Zhejiang</td><td>Glass decoration; sample service</td><td>Published as negotiable</td><td>Company catalog; checked 2026-07</td><td><span class="status">Source checked</span></td><td>Request finish samples and lead-time range.</td></tr>
+    <tr><td>Example Cosmetics C</td><td>Shanghai</td><td>Private-label fragrance; packaging support</td><td><span class="unknown">Not published</span></td><td>Business profile only</td><td><span class="unknown">Needs direct check</span></td><td>Verify manufacturing entity and certifications.</td></tr>
+  </table></div>
+
+  <h2>QA checklist</h2>
+  <ul>
+    <li>Every row has an accessible source and check date.</li>
+    <li>Unknown values remain unknown—never silently converted to zero.</li>
+    <li>Factory, trading company and brand owner are not interchangeable.</li>
+    <li>Published capability does not become a quality or compliance claim.</li>
+    <li>The handoff states what still needs commercial due diligence.</li>
+  </ul>
+</main>
+</body>
+</html>

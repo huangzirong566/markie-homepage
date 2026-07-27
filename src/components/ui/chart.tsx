@@ -18,7 +18,6 @@ export type ChartConfig = {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PayloadItem = any
 
 type ChartContextProps = {

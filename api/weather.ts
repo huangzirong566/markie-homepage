@@ -1,4 +1,13 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+interface VercelRequest {
+  method?: string;
+}
+
+interface VercelResponse {
+  setHeader(name: string, value: string): void;
+  status(code: number): VercelResponse;
+  end(): VercelResponse;
+  json(body: unknown): VercelResponse;
+}
 
 // 全国主要城市列表（包含省会城市和主要地级市）
 const CITIES = [
